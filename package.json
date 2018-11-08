@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --env.production",
-    "start": "webpacl --watch"
+    "start": "webpack --watch"
   },
   "keywords": [
     "Wordpress",
@@ -19,6 +19,8 @@
     "autoprefixer": "^9.3.1",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
+    "browser-sync": "^2.26.3",
+    "browser-sync-webpack-plugin": "^2.2.2",
     "css-loader": "^1.0.1",
     "eslint": "^5.8.0",
     "eslint-loader": "^2.1.1",

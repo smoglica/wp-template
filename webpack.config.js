@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = env => {
   const production = env && env.production;
@@ -69,6 +70,11 @@ module.exports = env => {
       new MiniCssExtractPlugin({
         filename: '[name].css'
       }),
+      new BrowserSyncPlugin({
+        files: ['**/*.php'],
+        host: 'localhost',
+        port: 3000
+      })
       // new webpack.optimize.CommonsChunkPlugin({
       //   name: 'common'
       // })
