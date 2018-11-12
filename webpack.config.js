@@ -6,7 +6,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = env => {
-  const production = env && env.production;
+  const production = (process.env.NODE_ENV && process.env.NODE_ENV === 'production') || (env && env.production);
 
   return {
     context: __dirname,
@@ -19,7 +19,7 @@ module.exports = env => {
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].js'
+      filename: 'js/[name].js'
     },
     module: {
       rules: [
@@ -67,17 +67,7 @@ module.exports = env => {
           NODE_ENV: JSON.stringify('production'),
         },
       }),
-      new MiniCssExtractPlugin({
-        filename: '[name].css'
-      }),
-      new BrowserSyncPlugin({
-        files: ['**/*.php'],
-        host: 'localhost',
-        port: 3000
-      })
-      // new webpack.optimize.CommonsChunkPlugin({
-      //   name: 'common'
-      // })
+      new MiniCssExtractPlugin({ filename: 'css/[name].css' })
     ],
     optimization: {
       minimizer: [
