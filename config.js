@@ -1,4 +1,5 @@
 const path = require('path');
+const { unipath } = require('./scripts/utils');
 
 module.exports = {
   THEME_NAME: 'wp-template',
@@ -13,10 +14,3 @@ module.exports = {
     base: unipath('.'),
   }
 };
-
-function unipath(base) {
-  return function() {
-    const _paths = [base].concat(Array.from(arguments));
-    return path.resolve(path.join.apply(null, _paths));
-  }
-}

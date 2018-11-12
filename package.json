@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --env.production",
-    "start": "webpack --watch"
+    "start": "webpack --watch",
+    "serve": "node ./scripts/serve.js"
   },
   "keywords": [
     "Wordpress",
@@ -20,18 +21,25 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "browser-sync": "^2.26.3",
+    "bs-html-injector": "^3.0.3",
+    "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
     "eslint": "^5.8.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-prettier": "^3.0.0",
+    "imagemin-webpack-plugin": "^2.3.0",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.10.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.14.3",
     "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3",
+    "write-file-webpack-plugin": "^4.4.1"
   }
 }
