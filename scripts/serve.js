@@ -1,7 +1,6 @@
 global.watch = true;
 
 const { PATHS, PROXY_TARGET } = require('../config');
-const path = require('path');
 const fs = require('fs-extra');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
