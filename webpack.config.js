@@ -1,4 +1,3 @@
-const path = require('path');
 const { PATHS, HOST, PORT, THEME_NAME } = require('./config');
 const webpack = require('webpack');
 const WriteFilePlugin = require('write-file-webpack-plugin');
@@ -20,7 +19,7 @@ module.exports = env => {
     watch: global.watch || false,
     output: {
       path: isProduction ? PATHS.dist() : PATHS.compiled(),
-      publicPath: isProduction  ? '/' : `http://${HOST}:${PORT}/wp-content/themes/${THEME_NAME}/`,
+      publicPath: isProduction  ? '/' : `//${HOST}:${PORT}/wp-content/themes/${THEME_NAME}/`,
       filename: 'js/[name].js',
       sourceMapFilename: 'js/[file].map'
     },
@@ -105,8 +104,8 @@ function getPlugins(isProduction) {
     }),
     new CopyWebpackPlugin([{ from: PATHS.src('assets'), to: 'assets' }]),
     new ImageminPlugin({
-       disable: !isProduction,
-       pngquant: {
+      disable: !isProduction,
+      pngquant: {
         quality: '95-100'
       }
     })
