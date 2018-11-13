@@ -6,9 +6,11 @@
  *
  * @package wp-template
  */
+define('VERSION', '1.0');
 define('WP_ENV', getenv('WP_ENV'));
 
-$base_dir = is_production() ? '/dist' : '/compiled';
+$is_production = is_production();
+$base_dir = $is_production ? '/dist' : '/compiled';
 
 define('THEME_NAME', 'wp-template');
 define('THEME_DIR', get_template_directory());
@@ -58,10 +60,11 @@ add_action('after_setup_theme', 'setup');
  */
 if (!is_admin()) {
   function theme_enqueue_scripts() {
-    wp_register_script('main', JS_DIR . '/main.js', array(), false, true);
-    wp_enqueue_script('main');
+    wp_enqueue_script('main', JS_DIR . '/main.js', array(), VERSION, true);
 
-    wp_enqueue_style('main', CSS_DIR . '/main.css');
+    if ($is_production) {
+      wp_enqueue_style('main', CSS_DIR . '/main.css', array(), VERSION, false);
+    }
   }
 
   add_action('wp_enqueue_scripts', 'theme_enqueue_scripts');
@@ -95,13 +98,13 @@ add_filter('excerpt_more', 'excerpt_more');
 function removeHeadLinks() {
   remove_action('wp_head', 'rsd_link'); // EditURI link
   remove_action('wp_head', 'wlwmanifest_link'); // Windows Live Writer
-  remove_action('wp_head', 'feed_links_extra', 3 ); // Category Feeds
-  remove_action('wp_head', 'feed_links', 2 ); // Post and Comment Feeds
-  remove_action('wp_head', 'index_rel_link' ); // Index link
-  remove_action('wp_head', 'parent_post_rel_link', 10, 0 ); // Previous link
-  remove_action('wp_head', 'start_post_rel_link', 10, 0 ); // Start link
-  remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 ); // Links for Adjacent Posts
-  remove_action('wp_head', 'wp_generator' ); // WP version
+  remove_action('wp_head', 'feed_links_extra', 3); // Category Feeds
+  remove_action('wp_head', 'feed_links', 2); // Post and Comment Feeds
+  remove_action('wp_head', 'index_rel_link'); // Index link
+  remove_action('wp_head', 'parent_post_rel_link', 10, 0); // Previous link
+  remove_action('wp_head', 'start_post_rel_link', 10, 0); // Start link
+  remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0); // Links for Adjacent Posts
+  remove_action('wp_head', 'wp_generator'); // WP version
 }
 add_action('init', 'removeHeadLinks');
 
