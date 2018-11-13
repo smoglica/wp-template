@@ -80,17 +80,17 @@ const getEntry = (isProduction) => {
 };
 
 const getScssLoaders = (isProduction) => {
-  const use = [];
+  const use = [
+    'css-loader',
+    'postcss-loader',
+    'sass-loader'
+  ];
 
   if (isProduction) {
-    use.push(MiniCssExtractPlugin.loader);
+    use.unshift(MiniCssExtractPlugin.loader);
   } else {
-    use.push('style-loader');
+    use.unshift('style-loader');
   }
-
-  use.push('css-loader');
-  use.push('postcss-loader');
-  use.push('sass-loader');
 
   return use;
 };

@@ -12,6 +12,8 @@ const webpackConfig = require('../webpack.config')();
 
 const bundler = webpack(webpackConfig);
 
+// setup html injector, only compare differences within outer most div (#page)
+// otherwise, it will replace the webpack HMR scripts
 browserSync.use(htmlInjector, { restrictions: ['#page'] });
 
 (async () => {
@@ -37,7 +39,10 @@ browserSync.use(htmlInjector, { restrictions: ['#page'] });
         // converts browsersync into a webpack-dev-server
         webpackDevMiddleware(bundler, {
           publicPath: webpackConfig.output.publicPath,
-          noInfo: true
+          noInfo: true,
+          stats: {
+            colors: true
+          }
         }),
         // hot update js && css
         webpackHotMiddleware(bundler)
