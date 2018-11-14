@@ -10,7 +10,7 @@ define('VERSION', '1.0');
 define('WP_ENV', getenv('WP_ENV'));
 
 $is_production = is_production();
-$base_dir = $is_production ? '/dist' : '/compiled';
+$base_dir = $is_production ? '/dist' : '';
 
 define('THEME_NAME', 'wp-template');
 define('THEME_DIR', get_template_directory());

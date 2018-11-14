@@ -1,6 +1,5 @@
 const { PATHS, HOST, PORT, THEME_NAME } = require('./config');
 const webpack = require('webpack');
-const WriteFilePlugin = require('write-file-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -18,8 +17,8 @@ module.exports = env => {
     entry: getEntry(isProduction),
     watch: global.watch || false,
     output: {
-      path: isProduction ? PATHS.dist() : PATHS.compiled(),
-      publicPath: isProduction  ? '/' : `//${HOST}:${PORT}/wp-content/themes/${THEME_NAME}/`,
+      path: PATHS.dist(),
+      publicPath: isProduction  ? '/' : `//${HOST}:${PORT}/wordpress/wp-content/themes/${THEME_NAME}/`,
       filename: 'js/[name].js',
       sourceMapFilename: 'js/[file].map'
     },
@@ -61,7 +60,7 @@ module.exports = env => {
   };
 };
 
-const getEntry = (isProduction) => {
+const getEntry = isProduction => {
   const entry = {
     main: [PATHS.src('index')],
     home: './src/components/templates/home/index'
@@ -78,7 +77,7 @@ const getEntry = (isProduction) => {
   return entry;
 };
 
-const getScssLoaders = (isProduction) => {
+const getScssLoaders = isProduction => {
   const use = [
     'css-loader',
     'postcss-loader',
@@ -94,30 +93,29 @@ const getScssLoaders = (isProduction) => {
   return use;
 };
 
-function getPlugins(isProduction) {
+const getPlugins = isProduction => {
   const plugins = [
     new webpack.ProgressPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development')
       }
-    }),
-    new CopyWebpackPlugin([{ from: PATHS.src('assets'), to: 'assets' }]),
-    new ImageminPlugin({
-      disable: !isProduction,
-      pngquant: {
-        quality: '95-100'
-      }
     })
   ];
 
   if (isProduction) {
     plugins.push(new MiniCssExtractPlugin({ filename: 'css/[name].css' }));
+    plugins.push(new CopyWebpackPlugin([{ from: PATHS.src('assets'), to: 'assets' }]));
+    plugins.push(new ImageminPlugin({
+      disable: !isProduction,
+      pngquant: {
+        quality: '95-100'
+      }
+    }));
   } else {
     plugins.push(new webpack.HotModuleReplacementPlugin());
     plugins.push(new webpack.NoEmitOnErrorsPlugin());
-    plugins.push(new WriteFilePlugin());
   }
 
   return plugins;
-}
+};
