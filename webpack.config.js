@@ -5,6 +5,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 module.exports = env => {
   const isProduction = (process.env.NODE_ENV && process.env.NODE_ENV === 'production') || (env && env.production);
@@ -96,6 +98,14 @@ const getScssLoaders = isProduction => {
 const getPlugins = isProduction => {
   const plugins = [
     new webpack.ProgressPlugin(),
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: [
+          isProduction ? `Files built in ${PATHS.dist()}` : `You application is running at http://${HOST}:${PORT}`
+        ]
+      },
+    }),
+    new CaseSensitivePathsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development')
@@ -105,7 +115,12 @@ const getPlugins = isProduction => {
 
   if (isProduction) {
     plugins.push(new MiniCssExtractPlugin({ filename: 'css/[name].css' }));
-    plugins.push(new CopyWebpackPlugin([{ from: PATHS.src('assets'), to: 'assets' }]));
+    plugins.push(new CopyWebpackPlugin([{
+      from: PATHS.src('assets'),
+      to: 'assets',
+      toType: 'dir',
+      ignore: ['.DS_Store']
+    }]));
     plugins.push(new ImageminPlugin({
       disable: !isProduction,
       pngquant: {

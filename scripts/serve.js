@@ -8,7 +8,6 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const htmlInjector = require('bs-html-injector');
 const webpackConfig = require('../webpack.config')();
-
 const bundler = webpack(webpackConfig);
 
 // setup html injector, only compare differences within outer most div (#page)
@@ -40,6 +39,7 @@ browserSync.use(htmlInjector, { /* restrictions: ['#page'] } */ });
           webpackDevMiddleware(bundler, {
             publicPath: webpackConfig.output.publicPath,
             noInfo: true,
+            logLevel: 'silent',
             stats: {
               colors: true
             }
