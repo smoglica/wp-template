@@ -105,6 +105,12 @@ function removeHeadLinks() {
   remove_action('wp_head', 'start_post_rel_link', 10, 0); // Start link
   remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0); // Links for Adjacent Posts
   remove_action('wp_head', 'wp_generator'); // WP version
+  remove_action('wp_head', 'rest_output_link_wp_head', 10); // Disable REST API link tag
+  remove_action('wp_head', 'wp_oembed_add_discovery_links', 10); // Disable oEmbed Discovery Links
+  remove_action('wp_head', 'print_emoji_detection_script', 7); // Emoji script
+
+  remove_action('wp_print_styles', 'print_emoji_styles'); // Emoji styles
+  remove_action('template_redirect', 'rest_output_link_header', 11, 0); // Disable REST API link in HTTP headers
 }
 add_action('init', 'removeHeadLinks');
 

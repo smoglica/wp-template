@@ -9,7 +9,7 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 module.exports = env => {
-  const isProduction = (process.env.NODE_ENV && process.env.NODE_ENV === 'production') || (env && env.production);
+  const isProduction = process.env.NODE_ENV === 'production' || (env && env.production);
 
   return {
     context: __dirname,
