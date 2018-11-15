@@ -8,13 +8,11 @@ module.exports = {
   plugins: ['prettier'],
   extends: 'eslint:recommended',
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     sourceType: 'module',
     parser: 'babel-eslint',
     ecmaFeatures: {
-      jsx: true,
-      modules: true,
-      experimentalObjectRestSpread: true
+      jsx: true
     }
   },
   rules: {
