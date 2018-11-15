@@ -4,9 +4,9 @@
   "description": "A basic WordPress theme template",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack --env.production",
+    "build": "cross-env NODE_ENV=production webpack --env.production",
     "start": "webpack --watch",
-    "serve": "node ./scripts/serve.js"
+    "serve": "cross-env NODE_ENV=development node ./scripts/serve.js"
   },
   "keywords": [
     "Wordpress",
@@ -24,6 +24,7 @@
     "bs-html-injector": "^3.0.3",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "copy-webpack-plugin": "^4.6.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^1.0.1",
     "eslint": "^5.8.0",
     "eslint-loader": "^2.1.1",
