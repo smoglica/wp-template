@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = env => {
   const isProduction = process.env.NODE_ENV === 'production' || (env && env.production);
@@ -20,7 +21,7 @@ module.exports = env => {
     watch: global.watch || false,
     output: {
       path: PATHS.dist(),
-      publicPath: isProduction  ? '/' : `//${HOST}:${PORT}/wordpress/wp-content/themes/${THEME_NAME}/`,
+      publicPath: `//${HOST}:${PORT}/wordpress/wp-content/themes/${THEME_NAME}/`,
       filename: 'js/[name].js',
       sourceMapFilename: 'js/[file].map'
     },
@@ -114,6 +115,7 @@ const getPlugins = isProduction => {
   ];
 
   if (isProduction) {
+    plugins.push(new CleanWebpackPlugin(PATHS.dist()));
     plugins.push(new MiniCssExtractPlugin({ filename: 'css/[name].css' }));
     plugins.push(new CopyWebpackPlugin([{
       from: PATHS.src('assets'),
@@ -122,7 +124,6 @@ const getPlugins = isProduction => {
       ignore: ['.DS_Store']
     }]));
     plugins.push(new ImageminPlugin({
-      disable: !isProduction,
       pngquant: {
         quality: '95-100'
       }
