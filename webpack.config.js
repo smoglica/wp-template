@@ -58,7 +58,19 @@ module.exports = env => {
           parallel: true
         }),
         new OptimizeCSSAssetsPlugin()
-      ]
+      ],
+      // runtimeChunk: false,
+      // splitChunks: {
+      //   cacheGroups: {
+      //     default: false,
+      //     commons: {
+      //       test: /[\\/]node_modules[\\/]/,
+      //       name: 'vendor',
+      //       chunks: 'all',
+      //       minChunks: 2
+      //     }
+      //   }
+      // }
     }
   };
 };

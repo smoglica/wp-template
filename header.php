@@ -21,7 +21,7 @@
       <strong>We're sorry but this website doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <header>
-      <h1 class="logo">
+      <h1>
         <?php if (!is_front_page()): ?>
           <a href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?> - <?php bloginfo('description'); ?>">
             <?php bloginfo('name'); ?>
