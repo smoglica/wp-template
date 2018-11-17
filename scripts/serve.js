@@ -1,6 +1,5 @@
 global.watch = true;
 
-// const fs = require('fs-extra');
 const { PATHS, PROXY_TARGET } = require('../config');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
@@ -15,8 +14,6 @@ const bundler = webpack(webpackConfig);
 browserSync.use(htmlInjector, { /* restrictions: ['#page'] } */ });
 
 (async () => {
-  // await fs.emptyDir(PATHS.compiled());
-
   try {
     browserSync.init({
       files: [

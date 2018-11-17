@@ -1,4 +1,3 @@
-const { PATHS, HOST, PORT, THEME_NAME } = require('./config');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
@@ -8,22 +7,36 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { PATHS, HOST, PORT, THEME_NAME } = require('./config');
 
 module.exports = env => {
-  const isProduction = process.env.NODE_ENV === 'production' || (env && env.production);
+  const production = process.env.NODE_ENV === 'production' || (env && env.production);
 
   return {
     context: __dirname,
     target: 'web',
-    mode: isProduction ? 'production' : 'development',
-    devtool: isProduction ? false : 'inline-source-map',
-    entry: getEntry(isProduction),
+    mode: production ? 'production' : 'development',
+    devtool: production ? false : 'inline-source-map',
+    entry: getEntry(production),
     watch: global.watch || false,
     output: {
       path: PATHS.dist(),
       publicPath: `//${HOST}:${PORT}/wordpress/wp-content/themes/${THEME_NAME}/`,
-      filename: 'js/[name].js',
-      sourceMapFilename: 'js/[file].map'
+      filename: 'js/[name].js'
+    },
+    stats: {
+      hash: false,
+      version: false,
+      timings: false,
+      children: false,
+      errors: false,
+      errorDetails: false,
+      warnings: false,
+      chunks: false,
+      modules: false,
+      reasons: false,
+      source: false,
+      publicPath: false,
     },
     module: {
       rules: [
@@ -31,12 +44,12 @@ module.exports = env => {
           test: /\.js$/,
           exclude: /(node_modules|bower_components)/,
           include: PATHS.src(),
-          use: ['babel-loader', 'eslint-loader']
+          use: getJsLoaders(production)
         },
         {
           test: /\.scss$/,
           exclude: /(node_modules|bower_components)/,
-          use: getScssLoaders(isProduction)
+          use: getScssLoaders(production)
         },
         {
           test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
@@ -49,8 +62,9 @@ module.exports = env => {
         '@': PATHS.src()
       }
     },
-    plugins: getPlugins(isProduction),
+    plugins: getPlugins(production),
     optimization: {
+      noEmitOnErrors: true,
       minimizer: [
         new UglifyJSPlugin({
           sourceMap: true,
@@ -75,31 +89,36 @@ module.exports = env => {
   };
 };
 
-const getEntry = isProduction => {
+const getEntry = production => {
   const entry = {
     main: [PATHS.src('index')],
     home: './src/components/templates/home/index'
   };
 
-  if (!isProduction) {
-    for (const [key, value] of Object.entries(entry)) {
-      if (Array.isArray(value)) {
-        entry[key].push('webpack-hot-middleware/client');
-      }
-    }
+  /**
+   * Loop through webpack entry
+   * and add the hot middleware
+   *
+   * @see {@link https://github.com/webpack-contrib/webpack-hot-middleware#use-with-multiple-entry-points-in-webpack }
+   */
+  if (!production) {
+    Object.keys(entry).forEach(name => {
+      entry[name] = Array.isArray(entry[name]) ? entry[name].slice(0) : [entry[name]];
+      entry[name].push('webpack-hot-middleware/client');
+    });
   }
 
   return entry;
 };
 
-const getScssLoaders = isProduction => {
+const getScssLoaders = production => {
   const use = [
     'css-loader',
     'postcss-loader',
     'sass-loader'
   ];
 
-  if (isProduction) {
+  if (production) {
     use.unshift(MiniCssExtractPlugin.loader);
   } else {
     use.unshift('style-loader');
@@ -108,25 +127,45 @@ const getScssLoaders = isProduction => {
   return use;
 };
 
-const getPlugins = isProduction => {
+const getJsLoaders = production => {
+  const use = ['babel-loader'];
+
+  /**
+   * Adds module.hot.accept to the bottom of modules
+   * if module.hot is not already present.
+   *
+   * @see {@link https://webpack.js.org/api/hot-module-replacement/}
+   * @see {@link https://www.npmjs.com/package/webpack-module-hot-accept}
+   */
+  if (!production) {
+    use.push('webpack-module-hot-accept');
+  }
+
+  use.push('eslint-loader');
+
+  return use;
+};
+
+const getPlugins = production => {
   const plugins = [
     new webpack.ProgressPlugin(),
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         messages: [
-          isProduction ? `Files built in ${PATHS.dist()}` : `You application is running at http://${HOST}:${PORT}`
+          production ? `Files built in ${PATHS.dist()}`
+            : `You application is running at http://${HOST}:${PORT}`
         ]
       },
     }),
     new CaseSensitivePathsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development')
+        NODE_ENV: JSON.stringify(production ? 'production' : 'development')
       }
     })
   ];
 
-  if (isProduction) {
+  if (production) {
     plugins.push(new CleanWebpackPlugin(PATHS.dist()));
     plugins.push(new MiniCssExtractPlugin({ filename: 'css/[name].css' }));
     plugins.push(new CopyWebpackPlugin([{
@@ -142,7 +181,6 @@ const getPlugins = isProduction => {
     }));
   } else {
     plugins.push(new webpack.HotModuleReplacementPlugin());
-    plugins.push(new webpack.NoEmitOnErrorsPlugin());
   }
 
   return plugins;
