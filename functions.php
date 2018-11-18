@@ -60,6 +60,8 @@ add_action('after_setup_theme', 'setup');
  */
 if (!is_admin()) {
   function theme_enqueue_scripts() {
+    wp_deregister_script('jquery');
+
     wp_enqueue_script('main', JS_DIR . '/main.js', array(), VERSION, true);
 
     if ($is_production) {
