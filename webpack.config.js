@@ -26,8 +26,6 @@ module.exports = env => {
     },
     stats: {
       hash: false,
-      version: false,
-      timings: false,
       children: false,
       errors: false,
       errorDetails: false,
@@ -35,8 +33,6 @@ module.exports = env => {
       chunks: false,
       modules: false,
       reasons: false,
-      source: false,
-      publicPath: false,
     },
     module: {
       rules: [
