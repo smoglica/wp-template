@@ -22,7 +22,7 @@ module.exports = env => {
     output: {
       path: PATHS.dist(),
       publicPath: `//${HOST}:${PORT}/wordpress/wp-content/themes/${THEME_NAME}/`,
-      filename: 'js/[name].js'
+      filename: 'js/[name].js',
     },
     stats: {
       hash: false,
@@ -44,23 +44,23 @@ module.exports = env => {
           test: /\.js$/,
           exclude: /(node_modules|bower_components)/,
           include: PATHS.src(),
-          use: getJsLoaders(production)
+          use: getJsLoaders(production),
         },
         {
           test: /\.scss$/,
           exclude: /(node_modules|bower_components)/,
-          use: getScssLoaders(production)
+          use: getScssLoaders(production),
         },
         {
           test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
-          use: ['file-loader']
-        }
-      ]
+          use: ['file-loader'],
+        },
+      ],
     },
     resolve: {
       alias: {
-        '@': PATHS.src()
-      }
+        '@': PATHS.src(),
+      },
     },
     plugins: getPlugins(production),
     optimization: {
@@ -69,9 +69,9 @@ module.exports = env => {
         new UglifyJSPlugin({
           sourceMap: true,
           cache: true,
-          parallel: true
+          parallel: true,
         }),
-        new OptimizeCSSAssetsPlugin()
+        new OptimizeCSSAssetsPlugin(),
       ],
       // runtimeChunk: false,
       // splitChunks: {
@@ -85,14 +85,14 @@ module.exports = env => {
       //     }
       //   }
       // }
-    }
+    },
   };
 };
 
 const getEntry = production => {
   const entry = {
     main: [PATHS.src('index')],
-    home: './src/components/templates/home/index'
+    home: './src/components/templates/home/index',
   };
 
   /**
@@ -112,11 +112,7 @@ const getEntry = production => {
 };
 
 const getScssLoaders = production => {
-  const use = [
-    'css-loader',
-    'postcss-loader',
-    'sass-loader'
-  ];
+  const use = ['css-loader', 'postcss-loader', 'sass-loader'];
 
   if (production) {
     use.unshift(MiniCssExtractPlugin.loader);
@@ -152,33 +148,38 @@ const getPlugins = production => {
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         messages: [
-          production ? `Files built in ${PATHS.dist()}`
-            : `You application is running at http://${HOST}:${PORT}`
-        ]
+          production ? `Files built in ${PATHS.dist()}` : `You application is running at http://${HOST}:${PORT}`,
+        ],
       },
     }),
     new CaseSensitivePathsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(production ? 'production' : 'development')
-      }
-    })
+        NODE_ENV: JSON.stringify(production ? 'production' : 'development'),
+      },
+    }),
   ];
 
   if (production) {
     plugins.push(new CleanWebpackPlugin(PATHS.dist()));
     plugins.push(new MiniCssExtractPlugin({ filename: 'css/[name].css' }));
-    plugins.push(new CopyWebpackPlugin([{
-      from: PATHS.src('assets'),
-      to: 'assets',
-      toType: 'dir',
-      ignore: ['.DS_Store']
-    }]));
-    plugins.push(new ImageminPlugin({
-      pngquant: {
-        quality: '95-100'
-      }
-    }));
+    plugins.push(
+      new CopyWebpackPlugin([
+        {
+          from: PATHS.src('assets'),
+          to: 'assets',
+          toType: 'dir',
+          ignore: ['.DS_Store'],
+        },
+      ])
+    );
+    plugins.push(
+      new ImageminPlugin({
+        pngquant: {
+          quality: '95-100',
+        },
+      })
+    );
   } else {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }

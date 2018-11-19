@@ -11,7 +11,9 @@ const bundler = webpack(webpackConfig);
 
 // setup html injector, only compare differences within outer most div (#page)
 // otherwise, it will replace the webpack HMR scripts
-browserSync.use(htmlInjector, { /* restrictions: ['#page'] } */ });
+browserSync.use(htmlInjector, {
+  /* restrictions: ['#page'] } */
+});
 
 (async () => {
   try {
@@ -25,8 +27,8 @@ browserSync.use(htmlInjector, { /* restrictions: ['#page'] } */ });
             if (file.endsWith('php')) {
               htmlInjector();
             }
-          }
-        }
+          },
+        },
       ],
       proxy: {
         // proxy local WP install
@@ -38,14 +40,14 @@ browserSync.use(htmlInjector, { /* restrictions: ['#page'] } */ });
             noInfo: true,
             logLevel: 'silent',
             stats: {
-              colors: true
-            }
+              colors: true,
+            },
           }),
           // hot update js && css
-          webpackHotMiddleware(bundler)
-        ]
+          webpackHotMiddleware(bundler),
+        ],
       },
-      open: false
+      open: false,
     });
   } catch (error) {
     // eslint-disable-next-line no-console

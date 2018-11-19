@@ -11,5 +11,5 @@ module.exports = {
     dist: unipath(path.resolve(__dirname, 'dist')),
     modules: unipath('node_modules'),
     base: unipath('.'),
-  }
+  },
 };
