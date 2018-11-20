@@ -13,18 +13,28 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = () => {
-  return merge(common, {
+  merge(common, {
     mode: 'production',
-    devtool: false,
+    devtool: 'source-map',
+    publicPath: '/',
     optimization: {
       noEmitOnErrors: true,
       minimizer: [
         new UglifyJSPlugin({
           sourceMap: true,
-          cache: true,
-          parallel: true,
+          uglifyOptions: {
+            compress: {
+              inline: false,
+            },
+          },
         }),
-        new OptimizeCSSAssetsPlugin(),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessor: require('cssnano')({ zindex: false }),
+          canPrint: false,
+          cssProcessorOptions: {
+            preset: ['default', { discardComments: { removeAll: true } }],
+          },
+        }),
       ],
       // runtimeChunk: false,
       // splitChunks: {

@@ -8,8 +8,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = env => {
   const isProduction = process.env.NODE_ENV === 'production' || (env && env.production);
 
-  console.log('isPROD', env.production);
-
   return {
     context: __dirname,
     target: 'web',

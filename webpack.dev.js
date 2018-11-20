@@ -17,7 +17,7 @@ module.exports = () => {
       new webpack.HotModuleReplacementPlugin(),
       new FriendlyErrorsWebpackPlugin({
         compilationSuccessInfo: {
-          messages: [`You application is running at http://${HOST}:${PORT}`],
+          messages: [`Your application is running @ http://${HOST}:${PORT}`],
         },
       }),
       new webpack.DefinePlugin({
