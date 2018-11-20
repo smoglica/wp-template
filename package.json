@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --env.production",
+    "build2": "webpack --config webpack.prod.js",
     "start": "webpack --watch",
     "serve": "cross-env NODE_ENV=development node ./scripts/serve.js"
   },
@@ -47,6 +48,7 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.24.3",
+    "webpack-merge": "^4.1.4",
     "webpack-module-hot-accept": "^1.0.5"
   },
   "husky": {
