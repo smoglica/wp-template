@@ -7,10 +7,9 @@
  * @package wp-template
  */
 define('VERSION', '1.0');
-define('WP_ENV', getenv('WP_ENV'));
+define('WP_ENV', getenv('WP_ENV') ?: 'production');
 
-$is_production = is_production();
-$base_dir = $is_production ? '/dist' : '';
+$base_dir = is_production() ? '/dist' : '';
 
 define('THEME_NAME', 'wp-template');
 define('THEME_DIR', get_template_directory());
@@ -31,7 +30,7 @@ define('LANGUAGES_DIR', THEME_DIR . '/languages');
  */
 if (!function_exists('setup')) {
   function setup() {
-    load_theme_textdomain(THEME_NAME, THEME_LANGUAGES_DIR);
+    load_theme_textdomain(THEME_NAME, LANGUAGES_DIR);
 
     add_theme_support('menus');
     add_theme_support('automatic-feed-links');
@@ -64,7 +63,7 @@ if (!is_admin()) {
 
     wp_enqueue_script('main', JS_DIR . '/main.js', array(), VERSION, true);
 
-    if ($is_production) {
+    if (is_production()) {
       wp_enqueue_style('main', CSS_DIR . '/main.css', array(), VERSION, false);
     }
   }
@@ -78,7 +77,7 @@ if (!is_admin()) {
  * @return boolean
  */
 function is_production() {
-  return !empty(WP_ENV) && WP_ENV !== 'development';
+  return !empty(WP_ENV) && WP_ENV === 'production';
 }
 
 /**
