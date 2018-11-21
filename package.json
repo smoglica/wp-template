@@ -4,8 +4,7 @@
   "description": "A basic WordPress theme template",
   "main": "src/index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --env.production",
-    "build2": "webpack --config webpack.prod.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
     "start": "webpack --watch",
     "serve": "cross-env NODE_ENV=development node ./scripts/serve.js"
   },

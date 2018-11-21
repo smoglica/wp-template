@@ -62,7 +62,6 @@ const getScssLoaders = isProduction => {
   const use = ['css-loader', 'postcss-loader', 'sass-loader'];
 
   if (isProduction) {
-    console.log('entra');
     use.unshift(MiniCssExtractPlugin.loader);
   } else {
     use.unshift('style-loader');
@@ -74,22 +73,18 @@ const getScssLoaders = isProduction => {
 const getJsLoaders = isProduction => {
   const use = ['babel-loader'];
 
+  /**
+   * Adds module.hot.accept to the bottom of modules
+   * if module.hot is not already present.
+   *
+   * @see {@link https://webpack.js.org/api/hot-module-replacement/}
+   * @see {@link https://www.npmjs.com/package/webpack-module-hot-accept}
+   */
   if (!isProduction) {
-    pushModuleHotAccept(use);
+    use.push('webpack-module-hot-accept');
   }
 
   use.push('eslint-loader');
 
   return use;
-};
-
-/**
- * Adds module.hot.accept to the bottom of modules
- * if module.hot is not already present.
- *
- * @see {@link https://webpack.js.org/api/hot-module-replacement/}
- * @see {@link https://www.npmjs.com/package/webpack-module-hot-accept}
- */
-const pushModuleHotAccept = use => {
-  use.push('webpack-module-hot-accept');
 };

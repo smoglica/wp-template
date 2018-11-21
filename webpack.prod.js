@@ -12,13 +12,16 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-module.exports = () => {
+module.exports = () =>
   merge(common, {
     mode: 'production',
     devtool: 'source-map',
-    publicPath: '/',
+    output: {
+      publicPath: '/',
+    },
     optimization: {
       noEmitOnErrors: true,
+      runtimeChunk: false,
       minimizer: [
         new UglifyJSPlugin({
           sourceMap: true,
@@ -29,25 +32,24 @@ module.exports = () => {
           },
         }),
         new OptimizeCSSAssetsPlugin({
-          cssProcessor: require('cssnano')({ zindex: false }),
+          // cssProcessor: require('cssnano')({ zindex: false }),
           canPrint: false,
           cssProcessorOptions: {
             preset: ['default', { discardComments: { removeAll: true } }],
           },
         }),
       ],
-      // runtimeChunk: false,
-      // splitChunks: {
-      //   cacheGroups: {
-      //     default: false,
-      //     commons: {
-      //       test: /[\\/]node_modules[\\/]/,
-      //       name: 'vendor',
-      //       chunks: 'all',
-      //       minChunks: 2
-      //     }
-      //   }
-      // }
+      splitChunks: {
+        cacheGroups: {
+          default: false,
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor',
+            chunks: 'all',
+            minChunks: 2,
+          },
+        },
+      },
     },
     plugins: [
       new CleanWebpackPlugin(PATHS.dist()),
@@ -77,4 +79,3 @@ module.exports = () => {
       }),
     ],
   });
-};
