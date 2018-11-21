@@ -1,6 +1,6 @@
 global.watch = true;
 
-const { PATHS, PROXY_TARGET } = require('../config');
+const { paths, proxyTarget } = require('../config');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -21,7 +21,7 @@ browserSync.use(htmlInjector, {
       files: [
         {
           // js changes are managed by webpack
-          match: [`${PATHS.base()}/*.php`],
+          match: [`${paths.base()}/*.php`],
           // manually sync everything else
           fn(event, file) {
             if (file.endsWith('php')) {
@@ -32,7 +32,7 @@ browserSync.use(htmlInjector, {
       ],
       proxy: {
         // proxy local WP install
-        target: PROXY_TARGET,
+        target: proxyTarget,
         middleware: [
           // converts browsersync into a webpack-dev-server
           webpackDevMiddleware(bundler, {

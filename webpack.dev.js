@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common')({ production: false });
-const { HOST, PORT } = require('./config');
+const { host, port } = require('./config');
 
 // plugins
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
@@ -17,7 +17,7 @@ module.exports = () => {
       new webpack.HotModuleReplacementPlugin(),
       new FriendlyErrorsWebpackPlugin({
         compilationSuccessInfo: {
-          messages: [`Your application is running @ http://${HOST}:${PORT}`],
+          messages: [`Your application is running @ http://${host}:${port}`],
         },
       }),
       new webpack.DefinePlugin({

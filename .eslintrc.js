@@ -19,5 +19,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'arrow-body-style': ['error', 'as-needed'],
     'spaced-comment': ['error', 'always'],
+    'object-shorthand': ['error', 'always'],
   },
 };

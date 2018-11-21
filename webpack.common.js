@@ -1,24 +1,24 @@
 const webpack = require('webpack');
-const { PATHS, JS_FILENAME, PUBLIC_PATH } = require('./config');
+const { paths, jsFilename, publicPath } = require('./config');
 
 // plugins
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = env => {
-  const isProduction = process.env.NODE_ENV === 'production' || (env && env.production);
+  const isProduction = (env && env.production) || process.env.NODE_ENV === 'production';
 
   return {
     context: __dirname,
     target: 'web',
     entry: {
-      main: [PATHS.src('index')],
-      home: './src/components/templates/home/index',
+      main: [paths.src('index')],
+      home: [paths.src('components/templates/home/index')],
     },
     output: {
-      path: PATHS.dist(),
-      publicPath: PUBLIC_PATH,
-      filename: JS_FILENAME,
+      path: paths.dist(),
+      publicPath,
+      filename: jsFilename,
     },
     stats: {
       hash: false,
@@ -35,7 +35,7 @@ module.exports = env => {
         {
           test: /\.js$/,
           exclude: /(node_modules|bower_components)/,
-          include: PATHS.src(),
+          include: paths.src(),
           use: getJsLoaders(isProduction),
         },
         {
@@ -52,7 +52,7 @@ module.exports = env => {
     plugins: [new webpack.ProgressPlugin(), new CaseSensitivePathsPlugin()],
     resolve: {
       alias: {
-        '@': PATHS.src(),
+        '@': paths.src(),
       },
     },
   };

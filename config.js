@@ -1,4 +1,3 @@
-const path = require('path');
 const { unipath } = require('./scripts/utils');
 
 const PORT = 3000;
@@ -6,17 +5,17 @@ const HOST = 'localhost';
 const THEME_NAME = 'wp-template';
 
 module.exports = {
-  THEME_NAME,
-  HOST,
-  PORT,
-  PROXY_TARGET: 'localhost:8080',
-  PATHS: {
+  themeName: THEME_NAME,
+  host: HOST,
+  port: PORT,
+  proxyTarget: 'localhost:8080',
+  paths: {
     src: unipath('src'),
-    dist: unipath(path.resolve(__dirname, 'dist')),
+    dist: unipath('dist'),
     modules: unipath('node_modules'),
     base: unipath('.'),
   },
-  CSS_FILENAME: 'css/[name].css',
-  JS_FILENAME: 'js/[name].js',
-  PUBLIC_PATH: `//${HOST}:${PORT}/wordpress/wp-content/themes/${THEME_NAME}/`,
+  cssFilename: 'css/[name].css',
+  jsFilename: 'js/[name].js',
+  publicPath: `//${HOST}:${PORT}/wordpress/wp-content/themes/${THEME_NAME}/`,
 };

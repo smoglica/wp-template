@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common')({ production: true });
-const { PATHS, CSS_FILENAME } = require('./config');
+const { paths, cssFilename } = require('./config');
 
 // plugins
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
@@ -52,11 +52,11 @@ module.exports = () =>
       },
     },
     plugins: [
-      new CleanWebpackPlugin(PATHS.dist()),
-      new MiniCssExtractPlugin({ filename: CSS_FILENAME }),
+      new CleanWebpackPlugin(paths.dist()),
+      new MiniCssExtractPlugin({ filename: cssFilename }),
       new FriendlyErrorsWebpackPlugin({
         compilationSuccessInfo: {
-          messages: [`Files built in ${PATHS.dist()}`],
+          messages: [`Files built in ${paths.dist()}`],
         },
       }),
       new webpack.DefinePlugin({
@@ -66,7 +66,7 @@ module.exports = () =>
       }),
       new CopyWebpackPlugin([
         {
-          from: PATHS.src('assets'),
+          from: paths.src('assets'),
           to: 'assets',
           toType: 'dir',
           ignore: ['.DS_Store'],
