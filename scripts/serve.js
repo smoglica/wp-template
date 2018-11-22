@@ -1,6 +1,4 @@
-global.watch = true;
-
-const { paths, proxyTarget } = require('../config');
+const { paths, proxyTarget } = require('../app.config');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');

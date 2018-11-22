@@ -1,9 +1,40 @@
 const webpack = require('webpack');
-const { paths, jsFilename, publicPath } = require('./config');
+const { paths, jsFilename, publicPath } = require('./app.config');
 
 // plugins
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const getScssLoaders = isProduction => {
+  const use = ['css-loader', 'postcss-loader', 'sass-loader'];
+
+  if (isProduction) {
+    use.unshift(MiniCssExtractPlugin.loader);
+  } else {
+    use.unshift('style-loader');
+  }
+
+  return use;
+};
+
+const getJsLoaders = isProduction => {
+  const use = ['babel-loader'];
+
+  /**
+   * Adds module.hot.accept to the bottom of modules
+   * if module.hot is not already present.
+   *
+   * @see {@link https://webpack.js.org/api/hot-module-replacement/}
+   * @see {@link https://www.npmjs.com/package/webpack-module-hot-accept}
+   */
+  if (!isProduction) {
+    use.push('webpack-module-hot-accept');
+  }
+
+  use.push('eslint-loader');
+
+  return use;
+};
 
 module.exports = env => {
   const isProduction = (env && env.production) || process.env.NODE_ENV === 'production';
@@ -56,35 +87,4 @@ module.exports = env => {
       },
     },
   };
-};
-
-const getScssLoaders = isProduction => {
-  const use = ['css-loader', 'postcss-loader', 'sass-loader'];
-
-  if (isProduction) {
-    use.unshift(MiniCssExtractPlugin.loader);
-  } else {
-    use.unshift('style-loader');
-  }
-
-  return use;
-};
-
-const getJsLoaders = isProduction => {
-  const use = ['babel-loader'];
-
-  /**
-   * Adds module.hot.accept to the bottom of modules
-   * if module.hot is not already present.
-   *
-   * @see {@link https://webpack.js.org/api/hot-module-replacement/}
-   * @see {@link https://www.npmjs.com/package/webpack-module-hot-accept}
-   */
-  if (!isProduction) {
-    use.push('webpack-module-hot-accept');
-  }
-
-  use.push('eslint-loader');
-
-  return use;
 };

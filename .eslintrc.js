@@ -20,5 +20,7 @@ module.exports = {
     'arrow-body-style': ['error', 'as-needed'],
     'spaced-comment': ['error', 'always'],
     'object-shorthand': ['error', 'always'],
+    'prefer-rest-params': 'error',
+    'no-use-before-define': 'error',
   },
 };

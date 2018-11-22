@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common')({ production: true });
-const { paths, cssFilename } = require('./config');
+const { paths, cssFilename } = require('./app.config');
 
 // plugins
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');

@@ -1,11 +1,6 @@
 const path = require('path');
 
-module.exports = {
-  getEnv,
-  unipath,
-};
-
-function getEnv() {
+const getEnv = () => {
   const target = process.env.npm_lifecycle_event;
 
   switch (target) {
@@ -16,11 +11,14 @@ function getEnv() {
     default:
       return 'development';
   }
-}
+};
 
-function unipath(base) {
-  return function() {
-    const _paths = [base].concat(Array.from(arguments));
-    return path.resolve(path.join.apply(null, _paths));
-  };
-}
+const unipath = base => (...args) => {
+  const paths = [base].concat(Array.from(args));
+  return path.resolve(path.join.apply(null, paths));
+};
+
+module.exports = {
+  getEnv,
+  unipath,
+};

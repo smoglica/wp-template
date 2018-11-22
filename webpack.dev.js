@@ -1,33 +1,10 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common')({ production: false });
-const { host, port } = require('./config');
+const { host, port } = require('./app.config');
 
 // plugins
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-
-module.exports = () => {
-  addHotMiddleware();
-
-  return merge(common, {
-    mode: 'development',
-    devtool: 'inline-source-map',
-    watch: global.watch || false,
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new FriendlyErrorsWebpackPlugin({
-        compilationSuccessInfo: {
-          messages: [`Your application is running @ http://${host}:${port}`],
-        },
-      }),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('development'),
-        },
-      }),
-    ],
-  });
-};
 
 /**
  * Loop through webpack entry
@@ -41,5 +18,28 @@ const addHotMiddleware = () => {
   Object.keys(entry).forEach(name => {
     entry[name] = Array.isArray(entry[name]) ? entry[name].slice(0) : [entry[name]];
     entry[name].push('webpack-hot-middleware/client');
+  });
+};
+
+module.exports = () => {
+  addHotMiddleware();
+
+  return merge(common, {
+    mode: 'development',
+    devtool: 'inline-source-map',
+    watch: true,
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new FriendlyErrorsWebpackPlugin({
+        compilationSuccessInfo: {
+          messages: [`Your application is running @ http://${host}:${port}`],
+        },
+      }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('development'),
+        },
+      }),
+    ],
   });
 };
