@@ -1,9 +1,9 @@
-const webpack = require('webpack');
 const { paths, jsFilename, publicPath } = require('./app.config');
 
 // plugins
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WebpackBar = require('webpackbar');
 
 const getScssLoaders = isProduction => {
   const use = ['css-loader', 'postcss-loader', 'sass-loader'];
@@ -80,7 +80,7 @@ module.exports = env => {
         },
       ],
     },
-    plugins: [new webpack.ProgressPlugin(), new CaseSensitivePathsPlugin()],
+    plugins: [new WebpackBar(), new CaseSensitivePathsPlugin()],
     resolve: {
       alias: {
         '@': paths.src(),
