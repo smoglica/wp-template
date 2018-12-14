@@ -1,4 +1,4 @@
-const { paths, jsFilename, publicPath } = require('./app.config');
+const { paths, themeName } = require('./app.config');
 
 // plugins
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -48,8 +48,9 @@ module.exports = env => {
     },
     output: {
       path: paths.dist(),
-      publicPath,
-      filename: jsFilename,
+      publicPath: `/wp-content/themes/${themeName}/`,
+      filename: 'js/[name].js',
+      chunkFilename: 'js/[name].js',
     },
     stats: {
       hash: false,

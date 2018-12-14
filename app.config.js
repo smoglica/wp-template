@@ -9,9 +9,6 @@ module.exports = {
   host: HOST,
   port: PORT,
   proxyTarget: 'localhost:8080',
-  cssFilename: 'css/[name].css',
-  jsFilename: 'js/[name].js',
-  publicPath: `//${HOST}:${PORT}/wordpress/wp-content/themes/${THEME_NAME}/`,
   paths: {
     src: unipath('src'),
     dist: unipath('dist'),
