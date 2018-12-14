@@ -11,6 +11,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
 
 module.exports = () =>
   merge(common, {
@@ -74,8 +75,13 @@ module.exports = () =>
       ]),
       new ImageminPlugin({
         pngquant: {
-          quality: '95-100',
+          quality: '60',
         },
+        plugins: [
+          imageminMozjpeg({
+            quality: 60,
+          }),
+        ],
       }),
     ],
   });
