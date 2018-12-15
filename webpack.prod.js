@@ -33,7 +33,6 @@ module.exports = () =>
           },
         }),
         new OptimizeCSSAssetsPlugin({
-          // cssProcessor: require('cssnano')({ zindex: false }),
           canPrint: false,
           cssProcessorOptions: {
             preset: ['default', { discardComments: { removeAll: true } }],
@@ -43,11 +42,19 @@ module.exports = () =>
       splitChunks: {
         cacheGroups: {
           default: false,
-          commons: {
+          vendors: {
+            name: 'chunk-vendors',
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendor',
-            chunks: 'all',
+            priority: -10,
+            chunks: 'initial',
             minChunks: 2,
+          },
+          common: {
+            name: 'chunk-common',
+            minChunks: 2,
+            priority: -20,
+            chunks: 'initial',
+            reuseExistingChunk: true,
           },
         },
       },
