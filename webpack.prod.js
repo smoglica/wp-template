@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common')({ production: true });
 const { paths } = require('./app.config');
+const packageJson = require('./package.json');
 
 // plugins
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
@@ -60,6 +61,15 @@ module.exports = () =>
       },
     },
     plugins: [
+      new webpack.BannerPlugin(`
+        Name: [name]
+        File: [file]
+        Hash: [hash]
+        Chunkhash: [chunkhash]
+        Generated on: ${Date.now()}
+        Package: ${packageJson.name}
+        Version: v${packageJson.version}
+      `),
       new CleanWebpackPlugin(paths.dist()),
       new MiniCssExtractPlugin({
         filename: 'css/[name].css',

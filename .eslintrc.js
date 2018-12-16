@@ -15,6 +15,8 @@ module.exports = {
     },
   },
   rules: {
+    'no-var': 'error',
+    'prefer-template': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'arrow-body-style': ['error', 'as-needed'],
