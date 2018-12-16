@@ -4,6 +4,7 @@ const { paths, themeName } = require('./app.config');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackBar = require('webpackbar');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 const getScssLoaders = isProduction => {
   const use = ['css-loader', 'postcss-loader', 'sass-loader'];
@@ -81,7 +82,14 @@ module.exports = env => {
         },
       ],
     },
-    plugins: [new WebpackBar(), new CaseSensitivePathsPlugin()],
+    plugins: [
+      new WebpackBar(),
+      new CaseSensitivePathsPlugin(),
+      new StyleLintPlugin({
+        syntax: 'scss',
+        failOnError: isProduction,
+      }),
+    ],
     resolve: {
       alias: {
         '@': paths.src(),
