@@ -94,12 +94,33 @@ module.exports = () =>
         },
       ]),
       new ImageminPlugin({
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        optipng: {
+          optimizationLevel: 7,
+        },
+        gifsicle: {
+          optimizationLevel: 3,
+        },
         pngquant: {
-          quality: '60',
+          quality: '65-90',
+          speed: 4,
+        },
+        svgo: {
+          plugins: [
+            {
+              removeUnknownsAndDefaults: false,
+            },
+            {
+              cleanupIDs: false,
+            },
+            {
+              removeViewBox: false,
+            },
+          ],
         },
         plugins: [
           imageminMozjpeg({
-            quality: 60,
+            quality: 75,
           }),
         ],
       }),
