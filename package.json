@@ -61,13 +61,18 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,scss,md,html}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.{scss}": [
-      "stylelint --syntax=scss --fix",
-      "git add"
+    "linters": {
+      "*.{js,json,css,scss,md,html}": [
+        "prettier --write",
+        "git add"
+      ],
+      "*.{scss}": [
+        "stylelint --syntax=scss --fix",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "dist/**/*"
     ]
   }
 }
