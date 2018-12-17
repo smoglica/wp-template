@@ -1,11 +1,22 @@
 {
   "name": "ske/wp-template",
   "description": "A basic WordPress theme template",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "Skender Moglica",
-      "email": "moglica.s@gmail.com"
+      "email": "moglica.s@gmail.com",
+      "homepage": "http://skendermoglica.it"
     }
   ],
-  "require-dev": {}
+  "require-dev": {
+    "squizlabs/php_codesniffer": "3.*",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+    "wp-coding-standards/wpcs": "^1.2",
+    "roave/security-advisories": "dev-master"
+  },
+  "scripts": {
+    "php:lint": "phpcs",
+    "php:fix": "phpcbf"
+  }
 }
