@@ -7,8 +7,5 @@
       "email": "moglica.s@gmail.com"
     }
   ],
-  "require": {},
-  "require-dev": {
-    "overtrue/phplint": "^1.1"
-  }
+  "require-dev": {}
 }

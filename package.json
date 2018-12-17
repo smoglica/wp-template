@@ -8,8 +8,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
     "start": "webpack --watch",
-    "serve": "cross-env NODE_ENV=development node ./scripts/serve.js",
-    "lint:php": "./vendor/bin/phplint --no-cache"
+    "serve": "cross-env NODE_ENV=development node ./scripts/serve.js"
   },
   "keywords": [
     "Wordpress",
