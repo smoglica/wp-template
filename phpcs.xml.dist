@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+  PHP_CodeSniffer - Customisable Sniff Properties
+  @see {@link https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties}
+
+  WordPress-Coding-Standards - Customisable Sniff Properties
+  @see {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties}
+-->
+<ruleset name="WordPress Theme">
+  <description>PHPCS Ruleset for a WordPress Theme</description>
+  <file>.</file>
+
+  <exclude-pattern>/vendor/*</exclude-pattern>
+  <exclude-pattern>/node_modules/*</exclude-pattern>
+
+  <arg value="spv"/>
+  <arg name="colors"/>
+  <arg name="extensions" value="php"/>
+
+  <config name="minimum_supported_wp_version" value="4.4"/>
+  <config name="testVersion" value="5.6-"/>
+
+  <rule ref="WordPress">
+    <exclude name="WordPress.VIP"/>
+    <exclude name="Squiz.PHP.CommentedOutCode.Found"/>
+  </rule>
+
+  <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+
+  <rule ref="WordPress.Files.FileName">
+    <properties>
+      <property name="is_theme" value="true"/>
+    </properties>
+  </rule>
+
+  <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+    <properties>
+      <property name="prefixes" type="array" value="CHILD_THEME, CHILD_TEXT_DOMAIN,"/>
+    </properties>
+  </rule>
+
+  <!-- <rule ref="Squiz.Commenting">
+    <exclude name="Squiz.Commenting.FileComment.Missing"/>
+  </rule> -->
+</ruleset>
