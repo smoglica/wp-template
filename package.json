@@ -69,6 +69,11 @@
       "*.{scss}": [
         "stylelint --syntax=scss --fix",
         "git add"
+      ],
+      "*.{php}": [
+        "composer php:fix",
+        "composer php:lint",
+        "git add"
       ]
     },
     "ignore": [
