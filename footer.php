@@ -13,7 +13,7 @@
 
 		</main>
 		<footer class="footer">
-			<p>Copyright &copy; <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?></p>
+			<p>Copyright &copy; <?php print esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?></p>
 		</footer>
 		<?php wp_footer(); ?>
 	</body>

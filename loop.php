@@ -46,7 +46,15 @@ if ( is_page() ) :
 				</h1>
 				<div class="article-info">
 					<span class="date"><?php the_date( 'm-d-Y' ); ?></span>
-					<span class="comments"><?php comments_popup_link( __( 'Leave a comment' ), __( '1 Comment' ), __( '% Comments' ) ); ?></span>
+					<span class="comments">
+						<?php
+						comments_popup_link(
+							__( 'Leave a comment', 'wp-template' ),
+							__( '1 Comment', 'wp-template' ),
+							__( '% Comments', 'wp-template' )
+						);
+						?>
+					</span>
 				</div>
 			</header>
 			<div class="article-content">

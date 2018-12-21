@@ -1,23 +1,28 @@
 <?xml version="1.0"?>
-<!--
-  PHP_CodeSniffer - Customisable Sniff Properties
-  @see {@link https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties}
-
-  WordPress-Coding-Standards - Customisable Sniff Properties
-  @see {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties}
--->
 <ruleset name="WordPress Theme">
+  <!-- See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
+  <!-- See https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards -->
+  <!-- See https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki -->
+  <!-- See https://github.com/wimg/PHPCompatibility -->
+  <!-- See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties -->
+  <!-- See https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties -->
+
   <description>PHPCS Ruleset for a WordPress Theme</description>
   <file>.</file>
 
   <exclude-pattern>/vendor/*</exclude-pattern>
   <exclude-pattern>/node_modules/*</exclude-pattern>
 
-  <arg value="spv"/>
+  <arg value="sv"/>
   <arg name="colors"/>
   <arg name="extensions" value="php"/>
+  <arg name="parallel" value="8"/>
+  <arg name="basepath" value="./"/>
 
-  <config name="minimum_supported_wp_version" value="4.4"/>
+  <!-- Set the minimum supported WP version. This is used by several sniffs.
+     The minimum version set here should be in line with the minimum WP version
+     as set in the "Requires at least" tag in the readme.txt file. -->
+  <config name="minimum_supported_wp_version" value="4.5"/>
   <config name="testVersion" value="5.6-"/>
 
   <rule ref="WordPress">
@@ -27,19 +32,38 @@
 
   <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 
+  <!-- Verify that the text_domain is set to the desired text-domain.
+     Multiple valid text domains can be provided as a comma-delimited list. -->
+  <rule ref="WordPress.WP.I18n">
+    <properties>
+      <property name="text_domain" type="array" value="wp-template"/>
+    </properties>
+  </rule>
+
+  <!-- Allow for theme specific exceptions to the file name rules based
+     on the theme hierarchy. -->
   <rule ref="WordPress.Files.FileName">
     <properties>
       <property name="is_theme" value="true"/>
     </properties>
   </rule>
 
-  <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+  <rule ref="WordPress.Arrays.MultipleStatementAlignment">
     <properties>
-      <property name="prefixes" type="array" value="CHILD_THEME, CHILD_TEXT_DOMAIN,"/>
+      <!-- No need to adjust alignment of large arrays when the item with the largest key is removed. -->
+      <property name="exact" value="false"/>
+      <!-- Don't align multi-line items if ALL items in the array are multi-line. -->
+      <property name="alignMultilineItems" value="!=100"/>
+      <!-- Array assignment operator should always be on the same line as the array key. -->
+      <property name="ignoreNewlines" value="false"/>
     </properties>
   </rule>
 
-  <!-- <rule ref="Squiz.Commenting">
-    <exclude name="Squiz.Commenting.FileComment.Missing"/>
-  </rule> -->
+  <!-- Verify that everything in the global namespace is prefixed with a theme specific prefix.
+      Multiple valid prefixes can be provided as a comma-delimited list. -->
+  <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+    <properties>
+      <property name="prefixes" type="array" value="wpt,THEME"/>
+    </properties>
+  </rule>
 </ruleset>
