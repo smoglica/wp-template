@@ -24,5 +24,10 @@ module.exports = {
     'object-shorthand': ['error', 'always'],
     'prefer-rest-params': 'error',
     'no-use-before-define': 'error',
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
+      { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
+    ],
   },
 };
