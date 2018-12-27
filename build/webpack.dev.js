@@ -32,7 +32,7 @@ module.exports = () => {
       new webpack.HotModuleReplacementPlugin(),
       new FriendlyErrorsWebpackPlugin({
         compilationSuccessInfo: {
-          messages: [`Your application is running @ http://${host}:${port}`],
+          messages: [`Your application is running at http://${host}:${port}`],
         },
       }),
       new webpack.DefinePlugin({

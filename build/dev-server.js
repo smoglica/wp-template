@@ -16,6 +16,8 @@ browserSync.use(htmlInjector, {
 (async () => {
   try {
     browserSync.init({
+      logLevel: 'silent',
+      open: false,
       files: [
         {
           // js changes are managed by webpack
@@ -45,7 +47,6 @@ browserSync.use(htmlInjector, {
           webpackHotMiddleware(bundler),
         ],
       },
-      open: false,
     });
   } catch (error) {
     // eslint-disable-next-line no-console
