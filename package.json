@@ -1,13 +1,13 @@
 {
   "name": "wp-template",
   "version": "1.0.0",
-  "description": "A basic WordPress theme template",
+  "description": "A basic WordPress theme template.",
   "author": "Skender Moglica <moglica.s@gmail.com>",
   "license": "ISC",
+  "private": true,
   "main": "src/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.js",
-    "start": "webpack --watch",
     "serve": "cross-env NODE_ENV=development node build/dev-server.js"
   },
   "keywords": [

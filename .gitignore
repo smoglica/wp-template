@@ -1,5 +1,6 @@
 /dist
-node_modules
+/vendor/
+node_modules/
 .DS_Store
 
 # Log files
@@ -13,5 +14,3 @@ npm-debug.log*
 *.njsproj
 *.sln
 *.sw*
-
-/vendor/

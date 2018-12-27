@@ -70,7 +70,9 @@ module.exports = () =>
         Package: ${packageJson.name}
         Version: v${packageJson.version}
       `),
-      new CleanWebpackPlugin(paths.dist()),
+      new CleanWebpackPlugin(paths.dist(), {
+        root: paths.base(),
+      }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].css',
         chunkFilename: 'css/[name].css',
