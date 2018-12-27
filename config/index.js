@@ -1,4 +1,4 @@
-const { unipath } = require('./scripts/utils');
+const { unipath } = require('./../build/utils');
 
 const PORT = 3000;
 const HOST = 'localhost';

@@ -1,4 +1,4 @@
-const { paths, themeName } = require('./app.config');
+const { paths, themeName } = require('../config');
 
 // plugins
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');

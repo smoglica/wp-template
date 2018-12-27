@@ -1,10 +1,10 @@
-const { paths, proxyTarget } = require('../app.config');
+const { paths, proxyTarget } = require('../config');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const htmlInjector = require('bs-html-injector');
-const webpackConfig = require('../webpack.dev')();
+const webpackConfig = require('./webpack.dev')();
 const bundler = webpack(webpackConfig);
 
 // setup html injector, only compare differences within outer most div (#page)

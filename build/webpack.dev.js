@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common')({ production: false });
-const { host, port } = require('./app.config');
+const { host, port } = require('../config');
 
 // plugins
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');

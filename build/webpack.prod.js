@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common')({ production: true });
-const { paths } = require('./app.config');
-const packageJson = require('./package.json');
+const { paths } = require('../config');
+const packageJson = require('../package.json');
 
 // plugins
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
