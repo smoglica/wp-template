@@ -1,5 +1,5 @@
 const { paths, themeName } = require('../config');
-const { getJsLoaders, getScssLoaders } = require('./utils');
+const { jsLoaders, scssLoaders } = require('./utils');
 
 // plugins
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -36,14 +36,24 @@ module.exports = env => {
       rules: [
         {
           test: /\.js$/,
+          loader: 'eslint-loader',
+          enforce: 'pre',
+          include: paths.src(),
+          exclude: /(node_modules|bower_components)/,
+          options: {
+            formatter: require('eslint-formatter-friendly'),
+          },
+        },
+        {
+          test: /\.js$/,
           exclude: /(node_modules|bower_components)/,
           include: paths.src(),
-          use: getJsLoaders(isProduction),
+          use: jsLoaders(isProduction),
         },
         {
           test: /\.scss$/,
           exclude: /(node_modules|bower_components)/,
-          use: getScssLoaders(isProduction),
+          use: scssLoaders(isProduction),
         },
         {
           test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,

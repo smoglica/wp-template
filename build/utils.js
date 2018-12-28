@@ -19,7 +19,7 @@ const unipath = base => (...args) => {
   return path.resolve(path.join.apply(null, paths));
 };
 
-const getScssLoaders = isProduction => {
+const scssLoaders = isProduction => {
   const use = ['css-loader', 'postcss-loader', 'sass-loader'];
 
   if (isProduction) {
@@ -31,7 +31,7 @@ const getScssLoaders = isProduction => {
   return use;
 };
 
-const getJsLoaders = isProduction => {
+const jsLoaders = isProduction => {
   const use = ['babel-loader'];
 
   /**
@@ -45,14 +45,12 @@ const getJsLoaders = isProduction => {
     use.push('webpack-module-hot-accept');
   }
 
-  use.push('eslint-loader');
-
   return use;
 };
 
 module.exports = {
   getEnv,
   unipath,
-  getScssLoaders,
-  getJsLoaders,
+  scssLoaders,
+  jsLoaders,
 };
