@@ -92,7 +92,7 @@ module.exports = () =>
           from: paths.src('assets'),
           to: 'assets',
           toType: 'dir',
-          ignore: ['.DS_Store'],
+          ignore: ['.DS_Store', '.gitkeep'],
         },
       ]),
       new ImageminPlugin({

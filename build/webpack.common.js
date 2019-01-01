@@ -56,8 +56,69 @@ module.exports = env => {
           use: scssLoaders(isProduction),
         },
         {
-          test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
-          use: ['file-loader'],
+          test: /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/,
+          exclude: paths.src('assets', 'icons'),
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 4096,
+                fallback: {
+                  loader: 'file-loader',
+                  options: {
+                    name: `${paths.src('assets')}/images/[name].[ext]`,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          test: /\.(svg)(\?.*)?$/,
+          include: paths.src('assets', 'icons'),
+          use: [
+            'svg-sprite-loader',
+            {
+              loader: 'svgo-loader',
+              options: {
+                plugins: [{ removeTitle: true }, { convertPathData: false }, { removeUselessStrokeAndFill: true }],
+              },
+            },
+          ],
+        },
+        {
+          test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 4096,
+                fallback: {
+                  loader: 'file-loader',
+                  options: {
+                    name: `${paths.src('assets')}/media/[name].[ext]`,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 4096,
+                fallback: {
+                  loader: 'file-loader',
+                  options: {
+                    name: `${paths.src('assets')}/fonts/[name].[ext]`,
+                  },
+                },
+              },
+            },
+          ],
         },
       ],
     },
