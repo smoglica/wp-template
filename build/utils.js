@@ -20,7 +20,7 @@ const unipath = base => (...args) => {
 };
 
 const scssLoaders = isProduction => {
-  const use = ['css-loader', 'postcss-loader', 'sass-loader'];
+  const use = ['css-loader', 'postcss-loader', 'resolve-url-loader', 'sass-loader?sourceMap'];
 
   if (isProduction) {
     use.unshift(require('mini-css-extract-plugin').loader);
