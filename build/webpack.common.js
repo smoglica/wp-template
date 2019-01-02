@@ -5,6 +5,7 @@ const { jsLoaders, scssLoaders } = require('./utils');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = env => {
   const isProduction = (env && env.production) || process.env.NODE_ENV === 'production';
@@ -125,6 +126,7 @@ module.exports = env => {
     plugins: [
       new WebpackBar(),
       new CaseSensitivePathsPlugin(),
+      new FriendlyErrorsWebpackPlugin(),
       new StyleLintPlugin({
         syntax: 'scss',
         failOnError: isProduction,

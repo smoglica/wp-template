@@ -1,10 +1,6 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const common = require('./webpack.common')({ production: false });
-const { host, port } = require('../config');
-
-// plugins
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const webpackCommonConfig = require('./webpack.common')({ production: false });
 
 /**
  * Loop through webpack entry
@@ -13,7 +9,7 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
  * @see {@link https://github.com/webpack-contrib/webpack-hot-middleware#use-with-multiple-entry-points-in-webpack }
  */
 const addHotMiddleware = () => {
-  const { entry } = common;
+  const { entry } = webpackCommonConfig;
 
   Object.keys(entry).forEach(name => {
     entry[name] = Array.isArray(entry[name]) ? entry[name].slice(0) : [entry[name]];
@@ -24,13 +20,12 @@ const addHotMiddleware = () => {
 module.exports = () => {
   addHotMiddleware();
 
-  return merge(common, {
+  return merge(webpackCommonConfig, {
     mode: 'development',
     devtool: 'inline-source-map',
     watch: true,
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      new FriendlyErrorsWebpackPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('development'),

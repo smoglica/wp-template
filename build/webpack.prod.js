@@ -5,7 +5,6 @@ const { paths } = require('../config');
 const packageJson = require('../package.json');
 
 // plugins
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -76,11 +75,6 @@ module.exports = () =>
       new MiniCssExtractPlugin({
         filename: 'css/[name].css',
         chunkFilename: 'css/[name].css',
-      }),
-      new FriendlyErrorsWebpackPlugin({
-        compilationSuccessInfo: {
-          messages: [`Files built in ${paths.dist()}`],
-        },
       }),
       new webpack.DefinePlugin({
         'process.env': {
