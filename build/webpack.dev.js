@@ -30,11 +30,7 @@ module.exports = () => {
     watch: true,
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      new FriendlyErrorsWebpackPlugin({
-        compilationSuccessInfo: {
-          messages: [`Your application is running at http://${host}:${port}`],
-        },
-      }),
+      new FriendlyErrorsWebpackPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('development'),
