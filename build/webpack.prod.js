@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const common = require('./webpack.common')({ production: true });
+const webpackCommonConfig = require('./webpack.common')({ production: true });
 const { paths } = require('../config');
 const packageJson = require('../package.json');
 
@@ -14,11 +14,22 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 
 module.exports = () =>
-  merge(common, {
+  merge(webpackCommonConfig, {
     mode: 'production',
     devtool: 'source-map',
     output: {
       publicPath: '/',
+    },
+    stats: {
+      colors: true,
+      hash: false,
+      children: false,
+      errors: false,
+      errorDetails: false,
+      warnings: false,
+      chunks: false,
+      modules: false,
+      reasons: false,
     },
     optimization: {
       noEmitOnErrors: true,
@@ -60,35 +71,6 @@ module.exports = () =>
       },
     },
     plugins: [
-      new webpack.BannerPlugin(`
-        Name: [name]
-        File: [file]
-        Hash: [hash]
-        Chunkhash: [chunkhash]
-        Generated on: ${Date.now()}
-        Package: ${packageJson.name}
-        Version: v${packageJson.version}
-      `),
-      new CleanWebpackPlugin(paths.dist(), {
-        root: paths.base(),
-      }),
-      new MiniCssExtractPlugin({
-        filename: 'css/[name].css',
-        chunkFilename: 'css/[name].css',
-      }),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production'),
-        },
-      }),
-      new CopyWebpackPlugin([
-        {
-          from: paths.src('assets'),
-          to: 'assets',
-          toType: 'dir',
-          ignore: ['.DS_Store', '.gitkeep'],
-        },
-      ]),
       new ImageminPlugin({
         test: /\.(jpe?g|png|gif|svg)$/i,
         optipng: {
@@ -119,6 +101,42 @@ module.exports = () =>
             quality: 75,
           }),
         ],
+      }),
+      new CopyWebpackPlugin(['**/*'], {
+        context: paths.base(),
+        ignore: [
+          'vendor/**/*',
+          'node_modules/**/*',
+          'src/**/*',
+          'dist/**/*',
+          'bin/**/*',
+          '.*',
+          '*.js',
+          '*.json',
+          '*.lock',
+          '*.dist',
+        ],
+      }),
+      new webpack.BannerPlugin(`
+        Name: [name]
+        File: [file]
+        Hash: [hash]
+        Chunkhash: [chunkhash]
+        Generated on: ${Date.now()}
+        Package: ${packageJson.name}
+        Version: v${packageJson.version}
+      `),
+      new CleanWebpackPlugin(paths.dist(), {
+        root: paths.base(),
+      }),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].css',
+        chunkFilename: 'css/[name].css',
+      }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('production'),
+        },
       }),
     ],
   });

@@ -6,6 +6,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = env => {
   const isProduction = (env && env.production) || process.env.NODE_ENV === 'production';
@@ -22,16 +23,6 @@ module.exports = env => {
       publicPath: `/wp-content/themes/${themeName}/`,
       filename: 'js/[name].js',
       chunkFilename: 'js/[name].js',
-    },
-    stats: {
-      hash: false,
-      children: false,
-      errors: false,
-      errorDetails: false,
-      warnings: false,
-      chunks: false,
-      modules: false,
-      reasons: false,
     },
     module: {
       rules: [
@@ -131,6 +122,14 @@ module.exports = env => {
         syntax: 'scss',
         failOnError: isProduction,
       }),
+      new CopyWebpackPlugin([
+        {
+          from: paths.src('assets'),
+          to: 'assets',
+          toType: 'dir',
+          ignore: ['.DS_Store', '.gitkeep'],
+        },
+      ]),
     ],
     resolve: {
       alias: {

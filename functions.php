@@ -9,17 +9,15 @@
 
 define( 'THEME_ENV', getenv( 'WP_ENV' ) ?: 'production' );
 
-$wpt_base_dir = wpt_is_production() ? '/dist' : '';
-
 define( 'THEME_VERSION', '1.0' );
 define( 'THEME_NAME', 'wp-template' );
 define( 'THEME_DIR', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
 define( 'THEME_TEXT_DOMAIN', THEME_NAME );
 
-define( 'THEME_JS_DIR', THEME_URL . "${base_dir}/js" );
-define( 'THEME_CSS_DIR', THEME_URL . "${base_dir}/css" );
-define( 'THEME_IMAGES_DIR', THEME_URL . "${base_dir}/assets/images" );
+define( 'THEME_JS_DIR', THEME_URL . "/js" );
+define( 'THEME_CSS_DIR', THEME_URL . "/css" );
+define( 'THEME_IMAGES_DIR', THEME_URL . "/assets/images" );
 
 define( 'THEME_PLUGIN_DIR', THEME_DIR . '/includes/plugin' );
 define( 'THEME_INCLUDES_DIR', THEME_DIR . '/includes' );
