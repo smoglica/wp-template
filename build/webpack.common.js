@@ -120,6 +120,8 @@ module.exports = env => {
       new FriendlyErrorsWebpackPlugin(),
       new StyleLintPlugin({
         syntax: 'scss',
+        context: paths.src(),
+        files: '**/*.scss',
         failOnError: isProduction,
       }),
       new CopyWebpackPlugin([
