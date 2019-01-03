@@ -1,13 +1,9 @@
 const { unipath } = require('./../build/utils');
 
-const PORT = 3000;
-const HOST = 'localhost';
-const THEME_NAME = 'wp-template';
-
 module.exports = {
-  themeName: THEME_NAME,
-  host: HOST,
-  port: PORT,
+  themeName: 'wp-template',
+  host: 'localhost',
+  port: 3000,
   proxyTarget: 'localhost:8080',
   paths: {
     src: unipath('src'),

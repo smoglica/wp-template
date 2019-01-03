@@ -58,7 +58,7 @@ module.exports = env => {
                 fallback: {
                   loader: 'file-loader',
                   options: {
-                    name: `${paths.src('assets')}/images/[name].[ext]`,
+                    name: `assets/images/[name].[ext]`,
                   },
                 },
               },
@@ -88,7 +88,7 @@ module.exports = env => {
                 fallback: {
                   loader: 'file-loader',
                   options: {
-                    name: `${paths.src('assets')}/media/[name].[ext]`,
+                    name: `assets/media/[name].[ext]`,
                   },
                 },
               },
@@ -105,7 +105,7 @@ module.exports = env => {
                 fallback: {
                   loader: 'file-loader',
                   options: {
-                    name: `${paths.src('assets')}/fonts/[name].[ext]`,
+                    name: `assets/fonts/[name].[ext]`,
                   },
                 },
               },
