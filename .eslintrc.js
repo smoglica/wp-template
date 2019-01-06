@@ -8,7 +8,7 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: ['eslint:recommended', 'plugin:prettier/recommended', 'plugin:import/errors', 'plugin:import/warnings'],
+  extends: ['eslint:recommended', 'plugin:prettier/recommended', 'plugin:import/recommended'],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -39,6 +39,7 @@ module.exports = {
       { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
       { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
     ],
+    'import/no-useless-path-segments': 'error',
     'import/extensions': [
       'error',
       'always',
