@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package wp-template
+ * @package <%= conf.get("themePackageName") %>
  */
 
 ?>
@@ -37,7 +37,7 @@
 	<body <?php body_class(); ?>>
 		<noscript>
 			<strong>
-				<?php esc_html_e( 'We\'re sorry but this website doesn\'t work properly without JavaScript enabled. Please enable it to continue.', 'wp-template' ); ?>
+				<?php esc_html_e( 'We\'re sorry but this website doesn\'t work properly without JavaScript enabled. Please enable it to continue.', '<%= conf.get("themeTextDomain") %>' ); ?>
 			</strong>
 		</noscript>
 		<?php get_template_part( 'template-parts/navbar' ); ?>

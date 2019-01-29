@@ -4,16 +4,16 @@
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package wp-template
+ * @package <%= conf.get("themePackageName") %>
  */
 
 define( 'THEME_ENV', getenv( 'WP_ENV' ) ?: 'production' );
 
 define( 'THEME_VERSION', '1.0' );
-define( 'THEME_NAME', 'wp-template' );
+define( 'THEME_NAME', '<%= conf.get("themeDir") %>' );
 define( 'THEME_DIR', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
-define( 'THEME_TEXT_DOMAIN', THEME_NAME );
+define( 'THEME_TEXT_DOMAIN', '<%= conf.get("themeTextDomain") %>' );
 
 define( 'THEME_JS_DIR', THEME_URL . "/js" );
 define( 'THEME_CSS_DIR', THEME_URL . "/css" );
@@ -153,7 +153,7 @@ add_action( 'init', 'wpt_register_menus' );
 function wpt_register_widgets() {
 	register_sidebar(
 		array(
-			'name'          => __( 'Sidebar', 'wp-template' ),
+			'name'          => __( 'Sidebar', '<%= conf.get("themeTextDomain") %>' ),
 			'id'            => 'main-sidebar',
 			'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
 			'after_widget'  => '</li>',

@@ -2,7 +2,7 @@
 /**
  * The search form which will show the search results page.
  *
- * @package wp-template
+ * @package <%= conf.get("themePackageName") %>
  */
 
 ?>

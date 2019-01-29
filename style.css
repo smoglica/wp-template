@@ -1,11 +1,11 @@
 /*!
-Theme Name: WP Template
+Theme Name: <%= conf.get("themeName") %>
 Theme URI: http://www.skendermoglica.it
 Description: WordPress starter theme.
 Version: 1.0.0
 Author: Skender Moglica
 Author URI: http://www.skendermoglica.it
-Text Domain: wp-template
+Text Domain: <%= conf.get("themeTextDomain") %>
 License: GNU General Public License v2 or later
 License URI: LICENSE
 Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready

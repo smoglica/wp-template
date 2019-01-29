@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package wp-template
+ * @package <%= conf.get("themePackageName") %>
  */
 
 get_header();

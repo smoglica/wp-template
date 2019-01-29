@@ -2,7 +2,7 @@
 /**
  * The main navigation bar
  *
- * @package wp-template
+ * @package <%= conf.get("themePackageName") %>
  */
 
 ?>

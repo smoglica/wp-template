@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package wp-template
+ * @package <%= conf.get("themePackageName") %>
  */
 
 ?>
@@ -49,9 +49,9 @@ if ( is_page() ) :
 					<span class="comments">
 						<?php
 						comments_popup_link(
-							__( 'Leave a comment', 'wp-template' ),
-							__( '1 Comment', 'wp-template' ),
-							__( '% Comments', 'wp-template' )
+							__( 'Leave a comment', '<%= conf.get("themeTextDomain") %>' ),
+							__( '1 Comment', '<%= conf.get("themeTextDomain") %>' ),
+							__( '% Comments', '<%= conf.get("themeTextDomain") %>' )
 						);
 						?>
 					</span>

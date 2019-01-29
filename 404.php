@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Creating_an_Error_404_Page
  *
- * @package wp-template
+ * @package <%= conf.get("themePackageName") %>
  */
 
 get_header();
