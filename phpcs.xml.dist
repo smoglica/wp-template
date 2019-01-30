@@ -63,7 +63,7 @@
       Multiple valid prefixes can be provided as a comma-delimited list. -->
   <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
     <properties>
-      <property name="prefixes" type="array" value="wpt,THEME"/>
+      <property name="prefixes" type="array" value="<%= conf.get("themeSlug") %>,THEME"/>
     </properties>
   </rule>
 </ruleset>

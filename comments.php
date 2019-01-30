@@ -88,7 +88,7 @@ This post is password protected. Enter the password to view comments.
 					<?php comment_id_fields(); ?>
 				</div>
 
-				<?php do_action( 'wpt_template_comment_form', $post->ID ); ?>
+				<?php do_action( '<%= conf.get("themeSlug") %>_template_comment_form', $post->ID ); ?>
 			</form>
 		<?php endif; ?>
 	</div>

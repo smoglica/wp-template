@@ -23,13 +23,13 @@ define( 'THEME_PLUGIN_DIR', THEME_DIR . '/includes/plugin' );
 define( 'THEME_INCLUDES_DIR', THEME_DIR . '/includes' );
 define( 'THEME_LANGUAGES_DIR', THEME_DIR . '/languages' );
 
-if ( ! function_exists( 'wpt_setup' ) ) {
+if ( ! function_exists( 'setup' ) ) {
 	/**
 	 * Basic theme setup
 	 *
 	 * @return void
 	 */
-	function wpt_setup() {
+	function setup() {
 		load_theme_textdomain( THEME_TEXT_DOMAIN, THEME_LANGUAGES_DIR );
 
 		add_theme_support( 'menus' );
@@ -50,7 +50,7 @@ if ( ! function_exists( 'wpt_setup' ) ) {
 		add_theme_support(
 			'custom-background',
 			apply_filters(
-				'wpt_custom_background_args',
+				'<%= conf.get("themeSlug") %>_custom_background_args',
 				array(
 					'default-color' => 'ffffff',
 					'default-image' => '',
@@ -59,7 +59,7 @@ if ( ! function_exists( 'wpt_setup' ) ) {
 		);
 	}
 }
-add_action( 'after_setup_theme', 'wpt_setup' );
+add_action( 'after_setup_theme', 'setup' );
 
 /**
  * Enqueue scripts
@@ -72,17 +72,17 @@ if ( ! is_admin() ) {
 	 *
 	 * @return void
 	 */
-	function wpt_theme_enqueue_scripts() {
+	function theme_enqueue_scripts() {
 		wp_deregister_script( 'jquery' );
 
 		wp_enqueue_script( 'main', THEME_JS_DIR . '/main.js', array(), THEME_VERSION, true );
 
-		if ( wpt_is_production() ) {
+		if ( is_production() ) {
 			wp_enqueue_style( 'main', THEME_CSS_DIR . '/main.css', array(), THEME_VERSION, false );
 		}
 	}
 
-	add_action( 'wp_enqueue_scripts', 'wpt_theme_enqueue_scripts' );
+	add_action( 'wp_enqueue_scripts', 'theme_enqueue_scripts' );
 }
 
 /**
@@ -90,7 +90,7 @@ if ( ! is_admin() ) {
  *
  * @return boolean
  */
-function wpt_is_production() {
+function is_production() {
 	return ! empty( THEME_ENV ) && 'production' === THEME_ENV;
 }
 
@@ -100,17 +100,17 @@ function wpt_is_production() {
  * @param [String] $more more.
  * @return String
  */
-function wpt_excerpt_more( $more ) {
+function excerpt_more( $more ) {
 	return '...';
 }
-add_filter( 'excerpt_more', 'wpt_excerpt_more' );
+add_filter( 'excerpt_more', 'excerpt_more' );
 
 /**
  * Clean up the <head>
  *
  * @return void
  */
-function wpt_remove_head_links() {
+function remove_head_links() {
 	remove_action( 'wp_head', 'rsd_link' ); // EditURI link!
 	remove_action( 'wp_head', 'wlwmanifest_link' ); // Windows Live Writer!
 	remove_action( 'wp_head', 'feed_links_extra', 3 ); // Category Feeds!
@@ -127,14 +127,14 @@ function wpt_remove_head_links() {
 	remove_action( 'wp_print_styles', 'print_emoji_styles' ); // Emoji styles!
 	remove_action( 'template_redirect', 'rest_output_link_header', 11, 0 ); // Disable REST API link in HTTP headers!
 }
-add_action( 'init', 'wpt_remove_head_links' );
+add_action( 'init', 'remove_head_links' );
 
 /**
  * Registration of the menus
  *
  * @return void
  */
-function wpt_register_menus() {
+function register_menus() {
 	register_nav_menus(
 		array(
 			'main-nav'      => 'Main Navigation',
@@ -143,14 +143,14 @@ function wpt_register_menus() {
 		)
 	);
 }
-add_action( 'init', 'wpt_register_menus' );
+add_action( 'init', 'register_menus' );
 
 /**
  * Registration of the widgets
  *
  * @return void
  */
-function wpt_register_widgets() {
+function register_widgets() {
 	register_sidebar(
 		array(
 			'name'          => __( 'Sidebar', '<%= conf.get("themeTextDomain") %>' ),
@@ -162,7 +162,7 @@ function wpt_register_widgets() {
 		)
 	);
 }
-add_action( 'widgets_init', 'wpt_register_widgets' );
+add_action( 'widgets_init', 'register_widgets' );
 
 /**
  * If you want to make sure only people who are logged in can see the site you can redirect
@@ -171,13 +171,13 @@ add_action( 'widgets_init', 'wpt_register_widgets' );
  *
  * @return void
  */
-function wpt_password_protected() {
+function password_protected() {
 	if ( ! is_user_logged_in() && ( 'development' === THEME_ENV || 'staging' === THEME_ENV ) ) {
 		wp_safe_redirect( get_option( 'siteurl' ) . '/wp-login.php' );
 		exit;
 	}
 }
-add_action( 'template_redirect', 'wpt_password_protected' );
+add_action( 'template_redirect', 'password_protected' );
 
 /**
  * Allow SVG through wp media uploader
@@ -185,9 +185,9 @@ add_action( 'template_redirect', 'wpt_password_protected' );
  * @param [Array] $mimes mimes.
  * @return Array
  */
-function wpt_cc_mime_types( $mimes ) {
+function cc_mime_types( $mimes ) {
 	$mimes['svg'] = 'image/svg+xml';
 
 	return $mimes;
 }
-add_filter( 'upload_mimes', 'wpt_cc_mime_types' );
+add_filter( 'upload_mimes', 'cc_mime_types' );
