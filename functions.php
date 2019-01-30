@@ -15,9 +15,9 @@ define( 'THEME_DIR', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
 define( 'THEME_TEXT_DOMAIN', '<%= conf.get("themeTextDomain") %>' );
 
-define( 'THEME_JS_DIR', THEME_URL . "/js" );
-define( 'THEME_CSS_DIR', THEME_URL . "/css" );
-define( 'THEME_IMAGES_DIR', THEME_URL . "/assets/images" );
+define( 'THEME_JS_DIR', THEME_URL . '/js' );
+define( 'THEME_CSS_DIR', THEME_URL . '/css' );
+define( 'THEME_IMAGES_DIR', THEME_URL . '/assets/images' );
 
 define( 'THEME_PLUGIN_DIR', THEME_DIR . '/includes/plugin' );
 define( 'THEME_INCLUDES_DIR', THEME_DIR . '/includes' );
