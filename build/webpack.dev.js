@@ -23,7 +23,7 @@ module.exports = (env, argv) =>
             injectCss: true,
           }
         ),
-      !argv.hot && new webpack.HotModuleReplacementPlugin(),
+      argv.hot && new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('development'),
