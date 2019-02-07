@@ -1,10 +1,28 @@
 /* eslint-disable no-console */
-const { paths, proxyTarget, host, port } = require('../config');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const htmlInjector = require('bs-html-injector');
-const webpackDevConfig = require('./webpack.dev')();
+const { paths, proxyTarget, host, port } = require('../config');
+const webpackDevConfig = require('./webpack.dev')(null, { hot: true });
+
+/**
+ * Loop through webpack entry
+ * and add the hot middleware
+ *
+ * @see {@link https://github.com/webpack-contrib/webpack-hot-middleware#use-with-multiple-entry-points-in-webpack }
+ */
+const addHotMiddleware = () => {
+  const { entry } = webpackDevConfig;
+
+  Object.keys(entry).forEach(name => {
+    entry[name] = Array.isArray(entry[name]) ? entry[name].slice(0) : [entry[name]];
+    entry[name].push('webpack-hot-middleware/client');
+  });
+};
+
+addHotMiddleware();
+
 const bundler = webpack(webpackDevConfig);
 
 // setup html injector, only compare differences within outer most div (#page)

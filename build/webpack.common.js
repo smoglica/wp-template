@@ -12,7 +12,7 @@ module.exports = env => {
   const isProduction = (env && env.production) || process.env.NODE_ENV === 'production';
 
   return {
-    context: __dirname,
+    context: paths.base(),
     target: 'web',
     entry: {
       main: [paths.src('index')],
@@ -23,6 +23,17 @@ module.exports = env => {
       publicPath: `/wp-content/themes/${themeName}/`,
       filename: 'js/[name].js',
       chunkFilename: 'js/[name].js',
+    },
+    stats: {
+      colors: true,
+      hash: false,
+      children: false,
+      errors: false,
+      errorDetails: false,
+      warnings: false,
+      chunks: false,
+      modules: false,
+      reasons: false,
     },
     module: {
       rules: [

@@ -12,7 +12,8 @@
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production node build/build.js",
-    "serve": "cross-env NODE_ENV=development node build/dev-server.js"
+    "serve": "cross-env NODE_ENV=development node build/dev-server.js",
+    "start": "cross-env NODE_ENV=development webpack --config build/webpack.dev.js"
   },
   "keywords": [
     "Wordpress",
@@ -25,6 +26,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "browser-sync": "^2.26.3",
+    "browser-sync-webpack-plugin": "^2.2.2",
     "bs-html-injector": "^3.0.3",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "clean-webpack-plugin": "^1.0.0",

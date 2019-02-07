@@ -20,17 +20,6 @@ module.exports = () =>
     output: {
       publicPath: '/',
     },
-    stats: {
-      colors: true,
-      hash: false,
-      children: false,
-      errors: false,
-      errorDetails: false,
-      warnings: false,
-      chunks: false,
-      modules: false,
-      reasons: false,
-    },
     optimization: {
       noEmitOnErrors: true,
       runtimeChunk: false,
