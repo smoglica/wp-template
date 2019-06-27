@@ -1,8 +1,8 @@
-const webpack = require('webpack');
+const { BannerPlugin, DefinePlugin } = require('webpack');
 const merge = require('webpack-merge');
 const webpackCommonConfig = require('./webpack.common')({ production: true });
 const { paths } = require('../config');
-const packageJson = require('../package.json');
+const { name, version } = require('../package.json');
 
 // plugins
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -106,15 +106,17 @@ module.exports = () =>
           '*.dist',
         ],
       }),
-      new webpack.BannerPlugin(`
-        Name: [name]
-        File: [file]
-        Hash: [hash]
-        Chunkhash: [chunkhash]
-        Generated on: ${Date.now()}
-        Package: ${packageJson.name}
-        Version: v${packageJson.version}
-      `),
+      new BannerPlugin(
+        [
+          'Name: [name]',
+          'File: [file]',
+          'Hash: [hash]',
+          'Chunkhash: [chunkhash]',
+          `Generated on: ${Date.now()}`,
+          `Package: ${name}`,
+          `Version: v${version}`,
+        ].join('\n')
+      ),
       new CleanWebpackPlugin(paths.dist(), {
         root: paths.base(),
       }),
@@ -122,7 +124,7 @@ module.exports = () =>
         filename: 'css/[name].css',
         chunkFilename: 'css/[name].css',
       }),
-      new webpack.DefinePlugin({
+      new DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('production'),
         },
