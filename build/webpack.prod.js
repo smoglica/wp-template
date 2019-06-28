@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const { BannerPlugin, DefinePlugin } = require('webpack');
 const merge = require('webpack-merge');
 

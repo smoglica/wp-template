@@ -1,6 +1,6 @@
 // npx eslint --fix .eslintrc.js --ignore-pattern '!.eslintrc.js'
 
-const isProduction = process.env.NODE_ENV === 'production';
+const { isProductionEnv } = require('./build/utils');
 
 module.exports = {
   env: {
@@ -27,8 +27,8 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': 'error',
-    'no-console': isProduction ? 'error' : 'warn',
-    'no-debugger': isProduction ? 'error' : 'warn',
+    'no-console': isProductionEnv() ? 'error' : 'warn',
+    'no-debugger': isProductionEnv() ? 'error' : 'warn',
     'import/extensions': [
       'error',
       'always',
