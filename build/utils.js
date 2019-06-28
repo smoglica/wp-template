@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const getEnv = () => {
   const target = process.env.npm_lifecycle_event;
@@ -23,7 +24,7 @@ const scssLoaders = isProduction => {
   const use = ['css-loader', 'postcss-loader', 'resolve-url-loader', 'sass-loader?sourceMap'];
 
   if (isProduction) {
-    use.unshift(require('mini-css-extract-plugin').loader);
+    use.unshift(MiniCssExtractPlugin.loader);
   } else {
     use.unshift('style-loader');
   }
