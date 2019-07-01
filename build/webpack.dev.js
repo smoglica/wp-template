@@ -1,10 +1,11 @@
 const { HotModuleReplacementPlugin, DefinePlugin } = require('webpack');
 const merge = require('webpack-merge');
-const webpackCommonConfig = require('./webpack.common')({ production: false });
-const { proxyTarget } = require('../config');
 
 // plugins
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+
+const webpackCommonConfig = require('./webpack.common')({ production: false });
+const { proxyTarget } = require('../config');
 
 module.exports = (env, argv) =>
   merge(webpackCommonConfig, {

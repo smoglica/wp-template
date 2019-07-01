@@ -3,6 +3,7 @@ const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const htmlInjector = require('bs-html-injector');
+const middleware = require('webpack-dev-middleware');
 const { paths, proxyTarget, host, port } = require('../config');
 const webpackDevConfig = require('./webpack.dev')(null, { hot: true });
 
@@ -31,7 +32,7 @@ browserSync.use(htmlInjector, {
   /* restrictions: ['#page'] } */
 });
 
-const webpackDevMiddleware = require('webpack-dev-middleware')(bundler, {
+const webpackDevMiddleware = middleware(bundler, {
   publicPath: webpackDevConfig.output.publicPath,
   noInfo: true,
   logLevel: 'silent',

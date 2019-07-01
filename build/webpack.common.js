@@ -1,12 +1,13 @@
-const { paths, themeName } = require('../config');
-const { jsLoaders, scssLoaders } = require('./utils');
-
 // plugins
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const eslintFormatterFriendly = require('eslint-formatter-friendly');
+
+const { jsLoaders, scssLoaders } = require('./utils');
+const { paths, themeName } = require('../config');
 
 module.exports = env => {
   const isProduction = (env && env.production) || process.env.NODE_ENV === 'production';
@@ -44,7 +45,7 @@ module.exports = env => {
           include: paths.src(),
           exclude: /(node_modules|bower_components)/,
           options: {
-            formatter: require('eslint-formatter-friendly'),
+            formatter: eslintFormatterFriendly,
           },
         },
         {
@@ -147,6 +148,8 @@ module.exports = env => {
     resolve: {
       alias: {
         '@': paths.src(),
+        '@@': paths.base(),
+        '~': paths.modules(),
       },
     },
   };
