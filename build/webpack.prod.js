@@ -1,11 +1,8 @@
-const webpack = require('webpack');
+const { BannerPlugin, DefinePlugin } = require('webpack');
 const merge = require('webpack-merge');
-const webpackCommonConfig = require('./webpack.common')({ production: true });
-const { paths } = require('../config');
-const packageJson = require('../package.json');
 
 // plugins
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
@@ -13,23 +10,16 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 
+const webpackCommonConfig = require('./webpack.common')({ production: true });
+const { paths } = require('../config');
+const { name, version } = require('../package.json');
+
 module.exports = () =>
   merge(webpackCommonConfig, {
     mode: 'production',
     devtool: 'source-map',
     output: {
       publicPath: '/',
-    },
-    stats: {
-      colors: true,
-      hash: false,
-      children: false,
-      errors: false,
-      errorDetails: false,
-      warnings: false,
-      chunks: false,
-      modules: false,
-      reasons: false,
     },
     optimization: {
       noEmitOnErrors: true,
@@ -117,23 +107,23 @@ module.exports = () =>
           '*.dist',
         ],
       }),
-      new webpack.BannerPlugin(`
-        Name: [name]
-        File: [file]
-        Hash: [hash]
-        Chunkhash: [chunkhash]
-        Generated on: ${Date.now()}
-        Package: ${packageJson.name}
-        Version: v${packageJson.version}
-      `),
-      new CleanWebpackPlugin(paths.dist(), {
-        root: paths.base(),
-      }),
+      new BannerPlugin(
+        [
+          'Name: [name]',
+          'File: [file]',
+          'Hash: [hash]',
+          'Chunkhash: [chunkhash]',
+          `Generated on: ${Date.now()}`,
+          `Package: ${name}`,
+          `Version: v${version}`,
+        ].join('\n')
+      ),
+      new CleanWebpackPlugin({ verbose: true }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].css',
         chunkFilename: 'css/[name].css',
       }),
-      new webpack.DefinePlugin({
+      new DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('production'),
         },

@@ -11,7 +11,7 @@ get_header();
 
 // phpcs:disable
 if ( isset( $_GET['paged'] ) ) {
-	$template_paged = sanitize_text_field( wp_unslash( $_GET['paged'] ) );
+	$wpt_paged = sanitize_text_field( wp_unslash( $_GET['paged'] ) );
 }
 // phpcs:enable
 ?>
@@ -33,7 +33,7 @@ if ( isset( $_GET['paged'] ) ) {
 		<h2 class="pagetitle">Archive for <?php the_time( 'Y' ); ?></h2>
 	<?php elseif ( is_author() ) : ?>
 		<h2 class="pagetitle">Author Archive</h2>
-	<?php elseif ( ! empty( $template_paged ) ) : ?>
+	<?php elseif ( ! empty( $wpt_paged ) ) : ?>
 		<h2 class="pagetitle">Blog Archives</h2>
 	<?php endif; ?>
 		<?php get_template_part( 'loop', 'archive' ); ?>

@@ -1,36 +1,35 @@
-const webpack = require('webpack');
+const { HotModuleReplacementPlugin, DefinePlugin } = require('webpack');
 const merge = require('webpack-merge');
+
+// plugins
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+
 const webpackCommonConfig = require('./webpack.common')({ production: false });
+const { proxyTarget } = require('../config');
 
-/**
- * Loop through webpack entry
- * and add the hot middleware
- *
- * @see {@link https://github.com/webpack-contrib/webpack-hot-middleware#use-with-multiple-entry-points-in-webpack }
- */
-const addHotMiddleware = () => {
-  const { entry } = webpackCommonConfig;
-
-  Object.keys(entry).forEach(name => {
-    entry[name] = Array.isArray(entry[name]) ? entry[name].slice(0) : [entry[name]];
-    entry[name].push('webpack-hot-middleware/client');
-  });
-};
-
-module.exports = () => {
-  addHotMiddleware();
-
-  return merge(webpackCommonConfig, {
+module.exports = (env, argv) =>
+  merge(webpackCommonConfig, {
     mode: 'development',
     devtool: 'inline-source-map',
     watch: true,
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.DefinePlugin({
+      !argv.hot &&
+        new BrowserSyncPlugin(
+          {
+            proxy: proxyTarget,
+            files: ['**/*.php'],
+            open: false,
+            delay: 500,
+          },
+          {
+            injectCss: true,
+          }
+        ),
+      argv.hot && new HotModuleReplacementPlugin(),
+      new DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('development'),
         },
       }),
-    ],
+    ].filter(Boolean),
   });
-};

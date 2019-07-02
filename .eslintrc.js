@@ -1,21 +1,22 @@
-const isProduction = process.env.NODE_ENV === 'production';
+// npx eslint --fix .eslintrc.js --ignore-pattern '!.eslintrc.js'
+
+const { isProductionEnv } = require('./build/utils');
 
 module.exports = {
-  root: true,
   env: {
     browser: true,
-    commonjs: true,
     es6: true,
-    node: true,
   },
-  extends: ['eslint:recommended', 'plugin:prettier/recommended', 'plugin:import/recommended'],
+  extends: ['airbnb-base', 'prettier'],
+  plugins: ['prettier'],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
     parser: 'babel-eslint',
-    ecmaFeatures: {
-      jsx: true,
-    },
   },
   settings: {
     'import/resolver': {
@@ -25,21 +26,9 @@ module.exports = {
     },
   },
   rules: {
-    'no-var': 'error',
-    'prefer-template': 'error',
-    'no-console': isProduction ? 'error' : 'warn',
-    'no-debugger': isProduction ? 'error' : 'warn',
-    'arrow-body-style': ['error', 'as-needed'],
-    'spaced-comment': ['error', 'always'],
-    'object-shorthand': ['error', 'always'],
-    'prefer-rest-params': 'error',
-    'no-use-before-define': 'error',
-    'padding-line-between-statements': [
-      'error',
-      { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
-      { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
-    ],
-    'import/no-useless-path-segments': 'error',
+    'prettier/prettier': 'error',
+    'no-console': isProductionEnv() ? 'error' : 'warn',
+    'no-debugger': isProductionEnv() ? 'error' : 'warn',
     'import/extensions': [
       'error',
       'always',
