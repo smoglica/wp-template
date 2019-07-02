@@ -19,6 +19,7 @@ module.exports = (env, argv) =>
             proxy: proxyTarget,
             files: ['**/*.php'],
             open: false,
+            delay: 500,
           },
           {
             injectCss: true,

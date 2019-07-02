@@ -18,7 +18,7 @@ const addHotMiddleware = () => {
 
   Object.keys(entry).forEach(name => {
     entry[name] = Array.isArray(entry[name]) ? entry[name].slice(0) : [entry[name]];
-    entry[name].push('webpack-hot-middleware/client');
+    entry[name].push('webpack-hot-middleware/client?reload=true');
   });
 };
 
@@ -71,7 +71,10 @@ webpackDevMiddleware.waitUntilValid(() => {
           // converts browsersync into a webpack-dev-server
           webpackDevMiddleware,
           // hot update js && css
-          webpackHotMiddleware(bundler),
+          webpackHotMiddleware(bundler, {
+            log: false,
+            heartbeat: 2000,
+          }),
         ],
       },
     });
