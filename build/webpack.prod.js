@@ -100,6 +100,7 @@ module.exports = () =>
           'src/**/*',
           'dist/**/*',
           'bin/**/*',
+          'docker/**/*',
           '.*',
           '*.js',
           '*.json',
