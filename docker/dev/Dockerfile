@@ -40,4 +40,14 @@ RUN bash install-composer.sh && mv composer.phar /usr/local/bin/composer
 
 WORKDIR /usr/src/app
 
+## Install node modules
+# COPY package*.json ./
+# RUN npm i
+
+## Install composer dependencies
+# COPY composer*.* ./
+# RUN composer i
+
+# VOLUME /usr/src/app/node_modules /usr/src/app/vendor
+
 CMD npm run serve

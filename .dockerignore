@@ -2,7 +2,7 @@ bin
 dist
 vendor
 node_modules
-docker
+# docker
 .dockerignore
 README.md
 LICENSE
