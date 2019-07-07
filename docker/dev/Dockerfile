@@ -1,11 +1,11 @@
 ## Build image
-# docker build -t wp-template-dev -f docker/dev/Dockerfile .
+# docker build -t <%= conf.get("themeDir") %>-dev -f docker/dev/Dockerfile .
 
 ## Install dependencies
-# docker run -it --rm -v $(pwd):/usr/src/app wp-template-dev composer i && npm i
+# docker run -it --rm -v $(pwd):/usr/src/app <%= conf.get("themeDir") %>-dev composer i && npm i
 
 ## Inside the container
-# docker run -it --rm -v $(pwd):/usr/src/app wp-template-dev sh
+# docker run -it --rm -v $(pwd):/usr/src/app <%= conf.get("themeDir") %>-dev sh
 
 FROM node:10-alpine
 

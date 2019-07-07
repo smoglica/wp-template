@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE_REPOSITORY=wp-template-dev
+IMAGE_REPOSITORY='<%= conf.get("themeDir") %>'
 IMAGE_TAG=latest
 IMAGE_NAME=${IMAGE_REPOSITORY}:${IMAGE_TAG}
 
