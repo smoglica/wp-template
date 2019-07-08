@@ -25,7 +25,9 @@ fi
 echo -e "\033[1;44m"Running development server at http://localhost:${CONTAINER_PUBLISHED_PORT}"\033[0m" && \
 docker run -dit --name ${CONTAINER_NAME} \
   -p "${CONTAINER_PUBLISHED_PORT}":3000 \
+  -p 3001:3001 \
   -v $(pwd):/usr/src/app:cached \
+  --net dev_default \
   ${IMAGE_NAME}
 
 echo -e "\033[1;44m"Follow log output"\033[0m"
